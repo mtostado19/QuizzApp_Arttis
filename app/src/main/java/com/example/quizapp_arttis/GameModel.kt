@@ -6,23 +6,31 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
-class GameModel(var questionsString: String, var optionsString: String ) : ViewModel(),
 
-    Parcelable {
+class GameModel(var questions: MutableList<Question>, var options: Options ) : ViewModel() {
 
-    var gson = Gson()
+
+    //var questions = mutableListOf<Question>()
+    private var gson = Gson()
 
     private var extraClue: Int = 0
     private var clues: Int = 1
     private var currentIndex: Int = 0
     private var hintsUsed: Int = 0
+   
 
-    val questionType = object : TypeToken<List<Question>>() {}.type
+    fun setTypes () {
+        for (e in questions) {
+            e.text = e.text.toString()
+            e.right = e.right.toString()
+            e.values = e.values.toList()
+            e.answered = e.answered.toString()
+            e.topic = e.topic.toString()
+        }
 
-    // private var questions = gson.fromJson<MutableList<Question>>(questionStringD, Question::class.java)
-    private var questions = gson.fromJson<List<Question>>(questionsString, questionType)
-    private var options = gson.fromJson<Options>(optionsString, Options::class.java)
+        options.level = options.level.toInt()
+        options.numberOfQuestions = options.numberOfQuestions.toInt()
+    }
 
     fun getValues(): IntArray {
         val returnValue = intArrayOf(extraClue, clues, currentIndex, hintsUsed)
@@ -35,6 +43,14 @@ class GameModel(var questionsString: String, var optionsString: String ) : ViewM
         currentIndex = data[2]
         hintsUsed = data[3]
     }
+    
+    fun getQuestionString() : String {
+        return gson.toJson(questions)
+    }
+
+    fun getOptionsString1() : String {
+        return gson.toJson(options)
+    }
 
     fun getCurrentQuestion() = questions[currentIndex]
 
@@ -42,30 +58,30 @@ class GameModel(var questionsString: String, var optionsString: String ) : ViewM
 
     fun getClues() = clues
 
-    fun setClues(num: Int) : Int  {
+    fun setClues(num: Int): Int {
         clues = num
         return clues
     }
 
-    fun nextQuestion() : Question {
+    fun nextQuestion(): Question {
         currentIndex = (currentIndex + 1) % questions.size
         return questions[currentIndex]
     }
 
-    fun prevQuestion() : Question {
-        currentIndex =  (currentIndex - 1) % questions.size
+    fun prevQuestion(): Question {
+        currentIndex = (currentIndex - 1) % questions.size
         if (currentIndex < 0) {
             currentIndex = questions.size - 1
         }
         return questions[currentIndex]
     }
 
-    fun checkAnswer(value : String) : Boolean {
+    fun checkAnswer(value: String): Boolean {
         questions[currentIndex].answered = value;
-        val result = value === questions[currentIndex].right
+        val result = value == questions[currentIndex].right
         if (result) {
             extraClue += 1
-            if (extraClue === 2) {
+            if (extraClue == 2) {
                 clues += 1
                 extraClue = 0
             }
@@ -74,15 +90,20 @@ class GameModel(var questionsString: String, var optionsString: String ) : ViewM
     }
 
     fun useClue(): Boolean {
-        if (clues > 0) {
-            hintsUsed += 1
-            questions[currentIndex].hintUsed = true
-            clues = clues - 1
-            extraClue = 0
-            return true
+        if (options.hint) {
+            if (clues > 0) {
+                hintsUsed += 1
+                questions[currentIndex].hintUsed = true
+                clues = clues - 1
+                extraClue = 0
+                return true
+            } else {
+                return false
+            }
         } else {
             return false
         }
+
     }
 
     fun secondClue(): Int {
@@ -97,10 +118,10 @@ class GameModel(var questionsString: String, var optionsString: String ) : ViewM
         var wrong = 0
 
         for (question in questions) {
-            if (question.answered === "not") {
+            if (question.answered == "not") {
                 return null
             } else {
-                if (question.answered === question.right){
+                if (question.answered == question.right) {
                     right += 1
                     if (question.hintUsed) {
                         cont += 5
@@ -113,7 +134,6 @@ class GameModel(var questionsString: String, var optionsString: String ) : ViewM
             }
         }
         //cont * options.level
-        return arrayOf(right, wrong, hintsUsed,  cont * options.level)
+        return arrayOf(right, wrong, hintsUsed, cont * options.level)
     }
-
 }
