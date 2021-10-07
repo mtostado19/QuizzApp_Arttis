@@ -24,6 +24,8 @@ class juego : AppCompatActivity()  {
     private lateinit var txtCluesScore: TextView
     private lateinit var txtTotal: TextView
     private lateinit var scoreImage: ImageView
+    private lateinit var questionString : String
+    private lateinit var optionsString : String
 
     private lateinit var gameModel: GameModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,49 +40,76 @@ class juego : AppCompatActivity()  {
             Question("Que es el queso5?", "1", listOf<String>("1", "3", "Cheese", "4"), "not", "Geography", false),
           )
 
-        var options = Options(3, 5, true, arrayOf<String>("Geography"))
+        var options = Options(3, 5, false, arrayOf<String>("Geography"))
 
         var gson = Gson()
 
-
-        var questionString = gson.toJson(questions)
-
-        Log.d("GSON STRING", questionString)
-
-        gameModel = GameModel(gson.toJson(questions), gson.toJson(options))
-
         if (savedInstanceState != null) {
-            savedInstanceState.getIntArray("KEY_GAME_MODEL_Values")?.let { gameModel.setValues(it) }
+            questionString = savedInstanceState.getString("KEY_GAME_MODEL_QUESTIONS").toString()
+            optionsString = savedInstanceState.getString("KEY_GAME_MODEL_OPTIONS").toString()
+        } else {
+            questionString = gson.toJson(questions)
+            optionsString = gson.toJson(options)
+        }
 
-            val currentQuestion = gameModel.getCurrentQuestion()
 
-            if (currentQuestion.answered !== "not") {
-                lvAnswers.setEnabled(false)
-                val index = currentQuestion.values.indexOf(currentQuestion.answered);
-                val stringColor = if(currentQuestion.values[index] === currentQuestion.right) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
-                lvAnswers.getChildAt(index)?.setBackgroundColor(stringColor)
+        var string1 = questionString.split("[{")[1].split("}]")[0].split("}")
+
+        var finalString = mutableListOf<String>()
+
+        for (i in 0 .. string1.size - 1) {
+            if (i == 0) {
+                finalString.add("{" + string1[i] + "}")
             } else {
-                lvAnswers.setEnabled(true)
+                finalString.add(string1[i].drop(1) + "}")
             }
         }
 
+        var questionsToSend = mutableListOf<Question>()
+        for (e in finalString) {
+            questionsToSend.add(gson.fromJson(e, Question::class.java))
+        }
+
+        var optionsToSend:Options = gson.fromJson(optionsString, Options::class.java)
+
+
+        gameModel = GameModel(questionsToSend, optionsToSend)
+        gameModel.setTypes()
+        lvAnswers = findViewById(R.id.AnswersLV)
         txtQuestion = findViewById(R.id.question_text)
         txtCurrent = findViewById(R.id.totalCurrent_text)
         txtClues = findViewById(R.id.clues_text)
-        lvAnswers = findViewById(R.id.AnswersLV)
         btnNext = findViewById(R.id.next_button)
         btnPrev = findViewById(R.id.prev_button)
         btnClue = findViewById<ImageButton>(R.id.clue_button)
-
-        txtQuestion.text = gameModel.getCurrentQuestion().text
-        txtCurrent.text = "${gameModel.getIndex() + 1}/${options.numberOfQuestions}"
-        txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
 
         var arrayAdapter : ArrayAdapter<String>
         val lvData = gameModel.getCurrentQuestion().values.toMutableList()
 
         arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, lvData)
         lvAnswers.adapter = arrayAdapter
+
+        if (savedInstanceState != null) {
+            savedInstanceState.getIntArray("KEY_GAME_MODEL_Values")?.let { gameModel.setValues(it) }
+
+            val currentQuestion = gameModel.getCurrentQuestion()
+            arrayAdapter.clear()
+            arrayAdapter.addAll(currentQuestion.values)
+
+            if (currentQuestion.answered != "not") {
+                lvAnswers.setEnabled(false)
+                val index = currentQuestion.values.indexOf(currentQuestion.answered);
+                val stringColor = if(currentQuestion.values[index] == currentQuestion.right) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
+                Log.d("A VER QUE U", "Index: ${index}, String: ${stringColor}, children: ${lvAnswers.childCount}")
+                lvAnswers.getChildAt(index)?.setBackgroundColor(stringColor)
+            } else {
+                lvAnswers.setEnabled(true)
+            }
+        }
+
+        txtQuestion.text = gameModel.getCurrentQuestion().text
+        txtCurrent.text = "${gameModel.getIndex() + 1}/${options.numberOfQuestions}"
+        txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Are you sure!")
@@ -107,6 +136,7 @@ class juego : AppCompatActivity()  {
 
 
         btnNext.setOnClickListener { _ ->
+            Log.d("Paso 1", "aaa")
             txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
             txtQuestion.text = gameModel.nextQuestion().text
             txtCurrent.text = "${gameModel.getIndex() + 1}/${options.numberOfQuestions}"
@@ -117,10 +147,12 @@ class juego : AppCompatActivity()  {
             for (i in mutableListOf<Int>(0, 1, 2, 3)) {
                 lvAnswers.getChildAt(i)?.setBackgroundColor(Color.parseColor("#040232"))
             }
-            if (currentQuestion.answered !== "not") {
+            Log.d("A VER:", "${currentQuestion.hintUsed.javaClass.kotlin}")
+            if (currentQuestion.answered != "not") {
                 lvAnswers.setEnabled(false)
                 val index = currentQuestion.values.indexOf(currentQuestion.answered);
-                val stringColor = if(currentQuestion.values[index] === currentQuestion.right) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
+                Log.d("QUE ES", "Index: ${index}, Lookin:${currentQuestion.answered} SIZE: ${currentQuestion.values.toString()}")
+                val stringColor = if(currentQuestion.values[index] == currentQuestion.right) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
                 lvAnswers.getChildAt(index)?.setBackgroundColor(stringColor)
             } else {
                 lvAnswers.setEnabled(true)
@@ -129,9 +161,11 @@ class juego : AppCompatActivity()  {
         }
 
         btnPrev.setOnClickListener { _ ->
+            Log.d("Paso 1", "Prueba: ${lvAnswers.childCount}")
             txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
             txtQuestion.text = gameModel.prevQuestion().text
             txtCurrent.text = "${gameModel.getIndex() + 1}/${options.numberOfQuestions}"
+
             val currentQuestion = gameModel.getCurrentQuestion()
             arrayAdapter.clear()
             arrayAdapter.addAll(currentQuestion.values)
@@ -139,29 +173,31 @@ class juego : AppCompatActivity()  {
             for (i in mutableListOf<Int>(0, 1, 2, 3)) {
                 lvAnswers.getChildAt(i)?.setBackgroundColor(Color.parseColor("#040232"))
             }
-            if (currentQuestion.answered !== "not") {
+
+            if (currentQuestion.answered != "not") {
                 val position = currentQuestion.values.indexOf(currentQuestion.answered)
                 //Log.d("A VER1", index.toString())
-                val stringColor = if(currentQuestion.values[position] === currentQuestion.right) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
-                Log.d("A ver 2", lvAnswers.childCount.toString())
+                val stringColor = if(currentQuestion.values[position] == currentQuestion.right) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
+
                 lvAnswers.getChildAt(position)?.setBackgroundColor(stringColor)
                 //ListView.Adapter.GetView(position, null, lvAnswers)?.setBackgroundColor(stringColor)
                 lvAnswers.setEnabled(false)
             } else {
                 lvAnswers.setEnabled(true)
             }
+
         }
 
          lvAnswers.setOnItemClickListener { parent, view, position, id ->
              Log.d("HOLA", "Hola: $position, $id, ${lvData[position]}")
+             Log.d("HOLADOOOS", "Hola: ${gameModel.getCurrentQuestion().toString()}")
              val result = gameModel.checkAnswer(lvData[position])
              val stringColor = if(result) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
              lvAnswers.getChildAt(position).setBackgroundColor(stringColor)
              lvAnswers.setEnabled(false)
              val score = gameModel.getScore()
 
-
-             if (score !== null) {
+             if (score != null) {
                  Log.d("HOLA", score.toString())
                  txtRight.text = "${resources.getString(R.string.right)} ${score[0]}"
                  txtWrong.text = "${resources.getString(R.string.wrong)} ${score[1]}"
@@ -181,7 +217,7 @@ class juego : AppCompatActivity()  {
 
         btnClue.setOnClickListener{ _->
             var currentQuestion = gameModel.getCurrentQuestion()
-            if (currentQuestion.answered !== "not" && !currentQuestion.hintUsed) {
+            if (currentQuestion.answered != "not" && !currentQuestion.hintUsed) {
                 return@setOnClickListener
             }
             if (currentQuestion.hintUsed && gameModel.useClue()) {
@@ -209,6 +245,9 @@ class juego : AppCompatActivity()  {
         super.onSaveInstanceState(outState)
         Log.d("QUIZZAPP_DEBUG", "onSaveInstanceState")
         outState.putIntArray("KEY_GAME_MODEL_Values", gameModel.getValues())
+        outState.putString("KEY_GAME_MODEL_QUESTIONS", gameModel.getQuestionString())
+        outState.putString("KEY_GAME_MODEL_OPTIONS", gameModel.getOptionsString1())
+
     }
 
 
@@ -220,7 +259,7 @@ fun getRandomValues(forbidden : Int ) : List<Int> {
     while (result.size < 2) {
         val random = (0..3).random()
 
-        if(forbidden !== random && !result.contains(random)){
+        if(forbidden != random && !result.contains(random)){
             result.add(random)
         }
     }
