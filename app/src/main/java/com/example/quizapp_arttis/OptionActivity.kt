@@ -1,15 +1,18 @@
 package com.example.quizapp_arttis
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
-
+import android.widget.Switch
+import android.widget.Toast
 
 
 class OptionActivity : AppCompatActivity() {
     // Declarar variables
     private lateinit var sliderPreguntas: com.google.android.material.slider.Slider
+    private lateinit var sliderDificultad: com.google.android.material.slider.Slider
     private lateinit var ckbTodo : CheckBox
     private lateinit var ckbGeo : CheckBox
     private lateinit var ckbPro : CheckBox
@@ -19,13 +22,14 @@ class OptionActivity : AppCompatActivity() {
     private lateinit var ckbVideojuegos : CheckBox
     private lateinit var btnRandom : Button
     private lateinit var btnSave : Button
+    private lateinit var swtichPistas : Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_option)
 
         sliderPreguntas = findViewById(R.id.slider_preguntas)
-
+        sliderDificultad = findViewById(R.id.sliderDificultad)
         ckbTodo = findViewById(R.id.ckb_todo)
         ckbGeo = findViewById(R.id.ckb_geografia)
         ckbPro = findViewById(R.id.ckb_programacion)
@@ -35,11 +39,28 @@ class OptionActivity : AppCompatActivity() {
         ckbVideojuegos = findViewById(R.id.ckb_videojuegos)
         btnRandom = findViewById(R.id.button)
         btnSave = findViewById(R.id.btnSave)
+        swtichPistas = findViewById(R.id.switch2)
+
+        var QuestionGeografia = resources.getString(R.string.psGeografía)
+        var QuestionVideojuegos = resources.getString(R.string.psVideojuegos)
+        var QuestionHistoria = resources.getString(R.string.psHistoria)
+        var QuestionCiencia = resources.getString(R.string.psCiencia)
+        var QuestionPeliculas = resources.getString(R.string.psPeliculas)
+        var QuestionProgramación = resources.getString(R.string.psProgramación)
 
         var CheckBoxValues = arrayListOf<CheckBox>(ckbGeo, ckbPro, ckbPeli, ckbCiencia, ckbHistoria, ckbVideojuegos)
 
-        ckbTodo.isChecked = false // No olvidar bloquear el checkbox activo cuando es el unico
+        // Info para mandar a mainActivity
+        var NumPreguntas = 6
+        var Temas = mutableListOf<String>(QuestionGeografia,QuestionVideojuegos,QuestionHistoria,QuestionCiencia,QuestionPeliculas,QuestionProgramación)
+        var dificultad = 1 // 1 : 2 - 2 : 3 - 3 : 4
+        var pistas = false
+        // Aqui termina la info que se manda a mainActivity
+
+        ckbTodo.isChecked = false // TODO: FALTA MANDAR LOS DATOS A MAIN ACTIVITY, VALIDAR QUE NO PUEDE SELECCIONAR MAS TEMAS QUE NUMERO DE PREGUNTAS
         ckbTodo.isEnabled = false
+
+        sliderPreguntas.value= 6.toFloat()
 
         for (x in 0..5){
             CheckBoxValues[x].isChecked = true
@@ -113,15 +134,54 @@ class OptionActivity : AppCompatActivity() {
         }
 
         btnRandom.setOnClickListener {
+            var banderaSama = false
             for (x in 0..5){
-                val NumRandomCheckboxMat = (0..1).random() // Al menos uno debe ser positivo
+                var NumRandomCheckboxMat = (0..1).random() // Al menos uno debe ser positivo
+                if (NumRandomCheckboxMat == 1){
+                    banderaSama = true
+                }
+                if (!banderaSama && x==5 ){
+                    NumRandomCheckboxMat = 1
+                }
                 CheckBoxValues[x].isChecked = NumRandomCheckboxMat != 0
             }
             sliderPreguntas.value = (5..10).random().toFloat()
         }
 
         btnSave.setOnClickListener {
+            NumPreguntas = sliderPreguntas.value.toInt()
+            dificultad = sliderDificultad.value.toInt()
+            pistas = swtichPistas.isChecked
+            Temas.clear()
+            if (ckbGeo.isChecked){
+                Temas.add(QuestionGeografia)
+            }
+            if (ckbVideojuegos.isChecked){
+                Temas.add(QuestionVideojuegos)
+            }
+            if (ckbCiencia.isChecked){
+                Temas.add(QuestionCiencia)
+            }
+            if (ckbHistoria.isChecked){
+                Temas.add(QuestionHistoria)
+            }
+            if (ckbPeli.isChecked){
+                Temas.add(QuestionPeliculas)
+            }
+            if (ckbPro.isChecked){
+                Temas.add(QuestionProgramación)
+            }
 
+            if (Temas.size == 6 && NumPreguntas == 5 || Temas.size==1 && NumPreguntas>5 ){ // falta validar que si es un tema no puede elegir mas de 5 preguntas
+                Toast.makeText(this, "Mas temas que preguntas o Mas preguntas que temas", Toast.LENGTH_LONG).show()
+            } else {
+                var intent = Intent(this , MainActivity::class.java)
+                intent.putStringArrayListExtra("Temas", ArrayList(Temas))
+                intent.putExtra("NumPreguntas", NumPreguntas)
+                intent.putExtra("dificultad", dificultad)
+                intent.putExtra("pistas", pistas)
+                startActivity(intent)
+            }
         }
 
     }

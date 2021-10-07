@@ -40,7 +40,7 @@ class juego : AppCompatActivity()  {
             Question("Que es el queso5?", "1", listOf<String>("1", "3", "Cheese", "4"), "not", "Geography", false),
           )
 
-        var options = Options(3, 5, false, arrayOf<String>("Geography"))
+        var options = Options(3, 5, false)
 
         var gson = Gson()
 
