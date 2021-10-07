@@ -3,4 +3,12 @@
   <string name="prev">Prev</string>
   <string name="next">Next</string>
   <string name="app_name">Arttis Questions</string>
+  <string name="clue">Pistas:</string>
+  <string name="psGeografia">¿Qué países tienen la frontera más grande del mundo?|¿Cual es el país más grande del mundo?|¿Cuál es el estado más grande de los Estados Unidos?|¿Cuántas islas tiene Japón?|¿Cuál es la diferencia entre isla e islote?</string>
+  <string name="completed">Juego completado!</string>
+  <string name="close">Cerrar</string>
+  <string name="stay">Continuar</string>
+  <string name="score">Puntos:</string>
+  <string name="right">Buenas:</string>
+  <string name="wrong">Malas:</string>
 </resources>

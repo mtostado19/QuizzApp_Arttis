@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/score_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/logotyerra"
+        android:backgroundTint="@null"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buenas: 2"
+            android:textSize="40dp"/>
+
+        <TextView
+            android:id="@+id/wrong_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Malas: 3"
+            android:textSize="40dp"/>
+
+        <TextView
+            android:id="@+id/clues_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pistas: 4"
+            android:textSize="40dp"/>
+
+        <TextView
+            android:id="@+id/totalScore_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: 10"
+            android:textSize="40dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>
