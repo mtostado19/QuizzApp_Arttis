@@ -37,6 +37,8 @@ class GameModel(var questions: MutableList<Question>, var options: Options ) : V
         return returnValue
     }
 
+    fun getMax() = options.numberOfQuestions
+
     fun setValues(data: IntArray) {
         extraClue = data[0]
         clues = data[1]
@@ -57,6 +59,8 @@ class GameModel(var questions: MutableList<Question>, var options: Options ) : V
     fun getIndex() = currentIndex
 
     fun getClues() = clues
+
+    fun getDifficulty() = options.level
 
     fun setClues(num: Int): Int {
         clues = num
