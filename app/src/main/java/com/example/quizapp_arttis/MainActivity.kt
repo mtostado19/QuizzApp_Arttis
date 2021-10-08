@@ -49,10 +49,15 @@ class MainActivity : AppCompatActivity() {
         var tostazzz = NumPreguntas / Temas.size // Casi Par
         var intervalodecomida = tostazzz*Temas.size // este da el numero de preguntas que calcula inicialmente por ejemplo 3 temas 5 preguntas al dividir da 1 de cada uno, por ello calculamos cuanstas faltan para llegar a numero de preguntas
         var numeroFaltantes = NumPreguntas-intervalodecomida // ejemplo: si numero de preguntas es 5 y tostatazzz es 3 entonces me devuelve 2
-        if (NumPreguntas % 2 == 0){
+        if (NumPreguntas % Temas.size  == 0){
         }else {
             banderaOtaku = true
         }
+
+        println("------- Num PREGUNTAS POR TEMA:")
+        println(tostazzz)
+        println("------- Num PREGUNTAS POR TEMA:")
+        println(numeroFaltantes)
 
         for (topicQuestion in Temas){
 
@@ -183,6 +188,9 @@ class MainActivity : AppCompatActivity() {
 
         btnOption.setOnClickListener { _ ->
             val intent = Intent(this, OptionActivity::class.java)
+            intent.putExtra("NumPreguntas", NumPreguntas)
+            intent.putExtra("dificultad",dificultad)
+            intent.putExtra("pistas",pistas)
             startActivity(intent)
         }
     }
