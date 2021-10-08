@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         var tostazzz = NumPreguntas / Temas.size // Casi Par
         var intervalodecomida = tostazzz*Temas.size // este da el numero de preguntas que calcula inicialmente por ejemplo 3 temas 5 preguntas al dividir da 1 de cada uno, por ello calculamos cuanstas faltan para llegar a numero de preguntas
         var numeroFaltantes = NumPreguntas-intervalodecomida // ejemplo: si numero de preguntas es 5 y tostatazzz es 3 entonces me devuelve 2
+
         if (NumPreguntas % Temas.size  == 0){
         }else {
             banderaOtaku = true
@@ -178,6 +179,7 @@ class MainActivity : AppCompatActivity() {
 
         btnPlay.setOnClickListener { _ ->
             val intent = Intent(this, juego::class.java)
+            QuestionList.shuffle()
             var gson = Gson()
             var QuestionString = gson.toJson(QuestionList)
             var ObstionString = gson.toJson(optionObj)

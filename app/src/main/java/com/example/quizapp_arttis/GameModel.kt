@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.Parcelize
 
 
-class GameModel(var questions: MutableList<Question>, var options: Options ) : ViewModel() {
+class GameModel(val questions: MutableList<Question>, val options: Options ) : ViewModel() {
 
 
     //var questions = mutableListOf<Question>()
@@ -37,6 +37,8 @@ class GameModel(var questions: MutableList<Question>, var options: Options ) : V
         return returnValue
     }
 
+    fun getMax() = options.numberOfQuestions
+
     fun setValues(data: IntArray) {
         extraClue = data[0]
         clues = data[1]
@@ -57,6 +59,8 @@ class GameModel(var questions: MutableList<Question>, var options: Options ) : V
     fun getIndex() = currentIndex
 
     fun getClues() = clues
+
+    fun getDifficulty() = options.level
 
     fun setClues(num: Int): Int {
         clues = num
@@ -92,9 +96,7 @@ class GameModel(var questions: MutableList<Question>, var options: Options ) : V
     fun useClue(): Boolean {
         if (options.hint) {
             if (clues > 0) {
-                hintsUsed += 1
                 questions[currentIndex].hintUsed = true
-                clues = clues - 1
                 extraClue = 0
                 return true
             } else {
@@ -104,6 +106,11 @@ class GameModel(var questions: MutableList<Question>, var options: Options ) : V
             return false
         }
 
+    }
+
+    fun reduceClue() {
+        hintsUsed += 1
+        clues -= 1
     }
 
     fun secondClue(): Int {
