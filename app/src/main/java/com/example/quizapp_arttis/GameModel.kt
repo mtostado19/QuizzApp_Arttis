@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.Parcelize
 
 
-class GameModel(var questions: MutableList<Question>, var options: Options ) : ViewModel() {
+class GameModel(val questions: MutableList<Question>, val options: Options ) : ViewModel() {
 
 
     //var questions = mutableListOf<Question>()

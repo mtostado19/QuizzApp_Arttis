@@ -77,18 +77,23 @@ class juego : AppCompatActivity()  {
         btnClue = findViewById<ImageButton>(R.id.clue_button)
 
         var arrayAdapter : ArrayAdapter<String>
-        val lvData = gameModel.getCurrentQuestion().values.toMutableList()
+        var lvData = gameModel.getCurrentQuestion().values.toMutableList()
 
         // arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, lvData)
-        arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, lvData)
+        arrayAdapter = customAdapter(this, lvData.toCollection(ArrayList()))
         lvAnswers.adapter = arrayAdapter
+
+        if (!optionsToSend.hint) {
+            btnClue.setImageResource(R.drawable.question_cancelled)
+        }
+
 
         if (savedInstanceState != null) {
             savedInstanceState.getIntArray("KEY_GAME_MODEL_Values")?.let { gameModel.setValues(it) }
 
             val currentQuestion = gameModel.getCurrentQuestion()
             arrayAdapter.clear()
-            arrayAdapter.addAll(currentQuestion.values.toMutableList())
+            arrayAdapter.addAll(currentQuestion.values.toCollection(ArrayList()))
 
             if (currentQuestion.answered != "not") {
                 lvAnswers.setEnabled(false)
@@ -132,22 +137,22 @@ class juego : AppCompatActivity()  {
 
 
         btnNext.setOnClickListener { _ ->
-            Log.d("Paso 1", "aaa")
             txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
             txtQuestion.text = gameModel.nextQuestion().text
             txtCurrent.text = "${gameModel.getIndex() + 1}/${gameModel.getMax()}"
             val currentQuestion =gameModel.getCurrentQuestion()
+            lvData = currentQuestion.values.toMutableList()
+            Log.d("CurrentAnswer", currentQuestion.right)
             arrayAdapter.clear()
-            arrayAdapter.addAll(currentQuestion.values)
+            arrayAdapter.addAll(currentQuestion.values.toCollection(ArrayList()))
 
             for (i in 0..gameModel.getDifficulty()) {
                 lvAnswers.getChildAt(i)?.setBackgroundColor(Color.parseColor("#040232"))
             }
-            Log.d("A VER:", "${currentQuestion.hintUsed.javaClass.kotlin}")
             if (currentQuestion.answered != "not") {
                 lvAnswers.setEnabled(false)
-                val index = currentQuestion.values.indexOf(currentQuestion.answered);
-                Log.d("QUE ES", "Index: ${index}, Lookin:${currentQuestion.answered} SIZE: ${currentQuestion.values.toString()}")
+                val index = currentQuestion.values.indexOf(currentQuestion.answered)
+                Log.d("A VER1", index.toString())
                 val stringColor = if(currentQuestion.values[index] == currentQuestion.right) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
                 lvAnswers.getChildAt(index)?.setBackgroundColor(stringColor)
             } else {
@@ -163,16 +168,19 @@ class juego : AppCompatActivity()  {
             txtCurrent.text = "${gameModel.getIndex() + 1}/${gameModel.getMax()}"
 
             val currentQuestion = gameModel.getCurrentQuestion()
+            lvData = currentQuestion.values.toMutableList()
+            Log.d("CurrentAnswer", currentQuestion.right)
             arrayAdapter.clear()
-            arrayAdapter.addAll(currentQuestion.values)
+            arrayAdapter.addAll(currentQuestion.values.toCollection(ArrayList()))
 
-            for (i in mutableListOf<Int>(0, 1, 2, 3)) {
+            for (i in 0..gameModel.getDifficulty()) {
                 lvAnswers.getChildAt(i)?.setBackgroundColor(Color.parseColor("#040232"))
             }
 
             if (currentQuestion.answered != "not") {
+                Log.d("A VER0", "1: ${currentQuestion.answered} ...  2: ${currentQuestion.values.toString()}")
                 val position = currentQuestion.values.indexOf(currentQuestion.answered)
-                //Log.d("A VER1", index.toString())
+                Log.d("A VER1", position.toString())
                 val stringColor = if(currentQuestion.values[position] == currentQuestion.right) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
 
                 lvAnswers.getChildAt(position)?.setBackgroundColor(stringColor)
@@ -185,6 +193,7 @@ class juego : AppCompatActivity()  {
         }
 
          lvAnswers.setOnItemClickListener { parent, view, position, id ->
+             Log.d("QUE ES:", lvData[position])
              val result = gameModel.checkAnswer(lvData[position])
              val stringColor = if(result) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
              lvAnswers.getChildAt(position).setBackgroundColor(stringColor)
