@@ -223,16 +223,20 @@ class juego : AppCompatActivity()  {
             if (currentQuestion.answered != "not" && !currentQuestion.hintUsed) {
                 return@setOnClickListener
             }
+
             if ((currentQuestion.hintUsed && gameModel.useClue()) || (gameModel.useClue() && gameModel.getDifficulty() == 1)) {
                 lvAnswers.getChildAt(gameModel.secondClue()).setBackgroundColor(Color.parseColor("#05ff15"))
+                gameModel.reduceClue()
                 lvAnswers.setEnabled(false)
                 txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
                 return@setOnClickListener
             }
+            Log.d("Clueeees", gameModel.getClues().toString())
             if (gameModel.useClue()) {
                 var index = currentQuestion.values.indexOf(currentQuestion.right)
+                gameModel.reduceClue()
 
-                val toDelete = getRandomValues(index);
+                val toDelete = getRandomValues(index, gameModel.getDifficulty());
                 Log.d("A ver", toDelete.toString())
 
                 for (i in toDelete) {
@@ -256,11 +260,11 @@ class juego : AppCompatActivity()  {
 
 }
 
-fun getRandomValues(forbidden : Int ) : List<Int> {
+fun getRandomValues(forbidden : Int, max: Int ) : List<Int> {
     val result = mutableListOf<Int>()
 
     while (result.size < 2) {
-        val random = (0..3).random()
+        val random = (0..max).random()
 
         if(forbidden != random && !result.contains(random)){
             result.add(random)

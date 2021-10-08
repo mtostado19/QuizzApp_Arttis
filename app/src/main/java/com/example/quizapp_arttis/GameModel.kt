@@ -96,9 +96,7 @@ class GameModel(val questions: MutableList<Question>, val options: Options ) : V
     fun useClue(): Boolean {
         if (options.hint) {
             if (clues > 0) {
-                hintsUsed += 1
                 questions[currentIndex].hintUsed = true
-                clues = clues - 1
                 extraClue = 0
                 return true
             } else {
@@ -108,6 +106,11 @@ class GameModel(val questions: MutableList<Question>, val options: Options ) : V
             return false
         }
 
+    }
+
+    fun reduceClue() {
+        hintsUsed += 1
+        clues -= 1
     }
 
     fun secondClue(): Int {
