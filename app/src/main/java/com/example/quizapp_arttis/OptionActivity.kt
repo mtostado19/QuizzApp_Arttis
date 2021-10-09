@@ -48,7 +48,6 @@ class OptionActivity : AppCompatActivity() {
         var QuestionPeliculas = resources.getString(R.string.psPeliculas)
         var QuestionProgramación = resources.getString(R.string.psProgramación)
 
-        var CheckBoxValues = arrayListOf<CheckBox>(ckbGeo, ckbPro, ckbPeli, ckbCiencia, ckbHistoria, ckbVideojuegos)
 
         // Info para mandar a mainActivity
         var NumPreguntas = 6
@@ -57,13 +56,49 @@ class OptionActivity : AppCompatActivity() {
         var pistas = false
         // Aqui termina la info que se manda a mainActivity
 
+        if (intent!=null){
+            println("************** SI ENTRA")
+            NumPreguntas = intent.getIntExtra("NumPreguntas", 6 )
+            dificultad = intent.getIntExtra("dificultad", 1)
+            pistas = intent.getBooleanExtra("pistas", false)
+            Temas = intent.getStringArrayListExtra("Temas")?.toMutableList() ?: mutableListOf<String>(QuestionGeografia,QuestionVideojuegos,QuestionHistoria,QuestionCiencia,QuestionPeliculas,QuestionProgramación)
+        }
+
+        println(Temas)
+        println(Temas.size)
+
+        var CheckBoxValues = arrayListOf<CheckBox>(ckbGeo, ckbPro, ckbPeli, ckbCiencia, ckbHistoria, ckbVideojuegos)
+
         ckbTodo.isChecked = false // TODO: FALTA MANDAR LOS DATOS A MAIN ACTIVITY, VALIDAR QUE NO PUEDE SELECCIONAR MAS TEMAS QUE NUMERO DE PREGUNTAS
         ckbTodo.isEnabled = false
 
-        sliderPreguntas.value= 6.toFloat()
+        sliderPreguntas.value= NumPreguntas.toFloat()
+        sliderDificultad.value = dificultad.toFloat()
+        swtichPistas.isChecked = pistas
 
-        for (x in 0..5){
-            CheckBoxValues[x].isChecked = true
+        //for (x in 0..5){ // Este coso de aqui prende todos los checkbox
+            //CheckBoxValues[x].isChecked = true
+        //}
+
+        for (check in Temas) {
+            if (check==QuestionGeografia){
+                ckbGeo.isChecked = true
+            }
+            if (check==QuestionProgramación){
+                ckbPro.isChecked = true
+            }
+            if (check==QuestionPeliculas){
+                ckbPeli.isChecked = true
+            }
+            if (check==QuestionCiencia){
+                ckbCiencia.isChecked = true
+            }
+            if (check==QuestionHistoria){
+                ckbHistoria.isChecked = true
+            }
+            if (check==QuestionVideojuegos){
+                ckbVideojuegos.isChecked = true
+            }
         }
 
         fun CheckTodoEnable() {
