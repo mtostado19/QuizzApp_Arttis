@@ -83,7 +83,7 @@ class GameModel(val questions: MutableList<Question>, val options: Options ) : V
     fun checkAnswer(value: String): Boolean {
         questions[currentIndex].answered = value;
         val result = value == questions[currentIndex].right
-        if (result) {
+        if (result && !questions[currentIndex].hintUsed) {
             extraClue += 1
             if (extraClue == 2) {
                 clues += 1

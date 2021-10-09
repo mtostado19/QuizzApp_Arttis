@@ -106,10 +106,15 @@ class juego : AppCompatActivity()  {
             }
         }
 
-
+        var pistas : Int
+        if (!optionsToSend.hint) {
+            pistas = 0
+        } else {
+            pistas = gameModel.getClues()
+        }
         txtQuestion.text = gameModel.getCurrentQuestion().text
         txtCurrent.text = "${gameModel.getIndex() + 1}/${gameModel.getMax()}"
-        txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
+        txtClues.text = "${resources.getString(R.string.clue)} ${pistas}"
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Are you sure!")
@@ -137,7 +142,12 @@ class juego : AppCompatActivity()  {
 
 
         btnNext.setOnClickListener { _ ->
-            txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
+            if (!optionsToSend.hint) {
+                pistas = 0
+            } else {
+                pistas = gameModel.getClues()
+            }
+            txtClues.text = "${resources.getString(R.string.clue)} ${pistas}"
             txtQuestion.text = gameModel.nextQuestion().text
             txtCurrent.text = "${gameModel.getIndex() + 1}/${gameModel.getMax()}"
             val currentQuestion =gameModel.getCurrentQuestion()
@@ -162,8 +172,13 @@ class juego : AppCompatActivity()  {
         }
 
         btnPrev.setOnClickListener { _ ->
+            if (!optionsToSend.hint) {
+                pistas = 0
+            } else {
+                pistas = gameModel.getClues()
+            }
             Log.d("Paso 1", "Prueba: ${lvAnswers.childCount}")
-            txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
+            txtClues.text = "${resources.getString(R.string.clue)} ${pistas}"
             txtQuestion.text = gameModel.prevQuestion().text
             txtCurrent.text = "${gameModel.getIndex() + 1}/${gameModel.getMax()}"
 
@@ -206,7 +221,7 @@ class juego : AppCompatActivity()  {
                  txtWrong.text = "${resources.getString(R.string.wrong)} ${score[1]}"
                  txtCluesScore.text = "${resources.getString(R.string.clue)} ${score[2]}"
                  txtTotal.text = "${resources.getString(R.string.score)} ${score[3]}"
-                 if (score[0] > 5 ) {
+                 if (score[0] > (optionsToSend.numberOfQuestions / 2) ) {
                      scoreImage.setImageResource(R.drawable.star_eyes)
                  } else {
                      scoreImage.setImageResource(R.drawable.clown)
@@ -229,6 +244,24 @@ class juego : AppCompatActivity()  {
                 gameModel.reduceClue()
                 lvAnswers.setEnabled(false)
                 txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
+
+                val score = gameModel.getScore()
+
+                if (score != null) {
+                    Log.d("HOLA", score.toString())
+                    txtRight.text = "${resources.getString(R.string.right)} ${score[0]}"
+                    txtWrong.text = "${resources.getString(R.string.wrong)} ${score[1]}"
+                    txtCluesScore.text = "${resources.getString(R.string.clue)} ${score[2]}"
+                    txtTotal.text = "${resources.getString(R.string.score)} ${score[3]}"
+                    if (score[0] > (optionsToSend.numberOfQuestions / 2) ) {
+                        scoreImage.setImageResource(R.drawable.star_eyes)
+                    } else {
+                        scoreImage.setImageResource(R.drawable.clown)
+                    }
+                    buildScore.create()
+                    buildScore.show()
+                    // Toast.makeText(this, score.toString(), Toast.LENGTH_LONG).show()
+                }
                 return@setOnClickListener
             }
             Log.d("Clueeees", gameModel.getClues().toString())
@@ -243,8 +276,9 @@ class juego : AppCompatActivity()  {
                     lvAnswers.getChildAt(i)?.setBackgroundColor(Color.parseColor("#ff0000"))
                 }
 
+                txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
             }
-            txtClues.text = "${resources.getString(R.string.clue)} ${gameModel.getClues()}"
+
         }
     }
 
