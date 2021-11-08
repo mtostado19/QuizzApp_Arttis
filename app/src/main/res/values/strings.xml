@@ -16,4 +16,20 @@
   <string name="score">Puntos:</string>
   <string name="right">Buenas:</string>
   <string name="wrong">Malas:</string>
+  <string name="topic">Temas</string>
+  <string name="all">Todos</string>
+  <string name="movies">Películas</string>
+  <string name="geography">Geografía</string>
+  <string name="science">Ciencia</string>
+  <string name="history">Historia</string>
+  <string name="programming">Programación</string>
+  <string name="videogames">Videojuegos</string>
+  <string name="numOfQuestions"># De preguntas</string>
+  <string name="hard">Dificil</string>
+  <string name="easy">Facil</string>
+  <string name="dif">Dificultad</string>
+  <string name="save">Guardar</string>
+  <string name="allowClues">Permitir pistas</string>
+  <string name="play">JUGAR</string>
+  <string name="opts">OPCIONES</string>
 </resources>

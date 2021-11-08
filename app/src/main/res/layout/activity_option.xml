@@ -32,7 +32,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Temas"
+                        android:text="@string/topic"
                         android:textColor="@color/white"
                         android:textSize="30dp" />
 
@@ -41,7 +41,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Todos"
+                        android:text="@string/all"
                         android:textColor="@color/white"
                         android:textSize="30dp" />
 
@@ -58,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Geografía"
+                        android:text="@string/geography"
                         android:textColor="@color/white"
                         android:textSize="18dp" />
 
@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Programación"
+                        android:text="@string/programming"
                         android:textColor="@color/white"
                         android:textSize="18dp" />
                 </LinearLayout>
@@ -83,7 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Películas"
+                        android:text="@string/movies"
                         android:textColor="@color/white"
                         android:textSize="18dp" />
 
@@ -92,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Ciencia"
+                        android:text="@string/science"
                         android:textColor="@color/white"
                         android:textSize="18dp" />
                 </LinearLayout>
@@ -108,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Historia"
+                        android:text="@string/history"
                         android:textColor="@color/white"
                         android:textSize="18dp" />
 
@@ -117,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Videojuegos"
+                        android:text="@string/videogames"
                         android:textColor="@color/white"
                         android:textSize="18dp" />
                 </LinearLayout>
@@ -133,7 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:layout_weight="1"
-                        android:text="# De preguntas"
+                        android:text="@string/numOfQuestions"
                         android:textColor="@color/white"
                         android:textSize="25dp" />
 
@@ -183,7 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="Dificultad"
+                    android:text="@string/dif"
                     android:textColor="@color/white"
                     android:textSize="25dp" />
 
@@ -197,7 +197,7 @@
                         android:layout_width="1dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Facil"
+                        android:text="@string/easy"
                         android:textColor="@color/white" />
 
                     <com.google.android.material.slider.Slider
@@ -215,7 +215,7 @@
                         android:layout_width="1dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Dificil"
+                        android:text="@string/hard"
                         android:textColor="@color/white" />
                 </LinearLayout>
 
@@ -230,7 +230,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:layout_weight="1"
-                        android:text="Permitir pistas"
+                        android:text="@string/allowClues"
                         android:textColor="@color/white"
                         android:textSize="25dp" />
 
@@ -248,7 +248,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="30dp"
-                    android:text="Guardar" />
+                    android:text="@string/save" />
 
             </LinearLayout>
         </LinearLayout>

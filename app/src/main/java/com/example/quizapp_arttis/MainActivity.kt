@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import androidx.room.Room
+import com.example.room_demo_application.db.AppDatabase
+import com.example.room_demo_application.db.Opciones
+import com.example.room_demo_application.db.Puntuacion
 import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
@@ -13,11 +17,25 @@ class MainActivity : AppCompatActivity() {
     var NumPreguntas = 6
     var dificultad = 1 // 1 : 2 - 2 : 3 - 3 : 4
     var pistas = false
+    private  lateinit var db : AppDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         btnPlay = findViewById(R.id.play_button)
         btnOption = findViewById(R.id.btn_option)
+
+        db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "game_v2.db"
+        ).allowMainThreadQueries().build()
+
+        val optionsDao = db.optionsDAO()
+        var deleteGSON = Gson()
+//         optionsDao.insert(Opciones(0,1, 1, "asdaw", true, "delete" ))
+         optionsDao.deleteSpecific("delete")
+
+        Log.d("HEREEEEE", deleteGSON.toJson(optionsDao.getAll()))
 
         var QuestionList = mutableListOf<Question>()
 
@@ -58,13 +76,6 @@ class MainActivity : AppCompatActivity() {
                 )
         }
 
-        println("---------------XDXD")
-        println(NumPreguntas)
-        println(dificultad)
-        println(pistas)
-        println(Temas)
-        println(Temas.size)
-        println("---------------")
 
         // ayudas de control de prguntas
         var banderaOtaku = false
@@ -79,10 +90,6 @@ class MainActivity : AppCompatActivity() {
             banderaOtaku = true
         }
 
-        println("------- Num PREGUNTAS POR TEMA:")
-        println(tostazzz)
-        println("------- Num PREGUNTAS POR TEMA:")
-        println(numeroFaltantes)
 
         for (topicQuestion in Temas) {
 

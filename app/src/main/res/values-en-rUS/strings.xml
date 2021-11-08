@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="prev">Prev</string>
+  <string name="next">Next</string>
+  <string name="app_name">Arttis Questions</string>
+  <string name="clue">Clues:</string>
+  <string name="psVideojuegos"> "What letter is used to identify that a game is rated for everyone?*E~M~T~C|How many games does the Dark Souls saga currently has?*5~4~3~7|In chronological order. What Halo game is the first in the timeline?*Halo Wars~Halo CE~Halo Infinte~Halo Reach|Who is the main character in “The legend of Zelda” saga?*Link~Zelda~Luis~Panchito|Name the Mario Bros game in which you primarily travel between planets*Super Mario Galaxy~Super Smash Bros~Mario Kart~Buscaminas" </string>
+  <string name="psHistoria">"How long did the 100 year war lasted?*116 years~100 years~97 years~143 years|What was the first great civilization of human history?*Sumerians~Egyptians~Mesopotamia~China|What was the name of the first atomic bomb used in a war?*Trinity~Little Boy~Big Boy~Fat Man|What is the name of the first living being ever send to space?*Laika~George Washington~Yuri Gagarin~Neil Armstrong|What time period did the "sengoku" era ocuppied in Japan?*1467 - 1568~1895 - 1932~3 - 400~1186 - 1247"</string>
+  <string name="psProgramación">"What is a variable?*A piece of information~A database user~A Pokemon~A Digimon|What does MERN stands for?*Mongodb-Express-React-Node~Mongodb-Express-Ruby-Nextjs~Minecraft-Emeralds-Redstone-No~Maybe~Mongodb-Emmet-Ruby-Nextjs|Which is the correct way to filter an array in JS?*Array.filter((x)=>==x)~plz.doArray([filter])~Array = filter~Array.filter(x)|What does AI stands for?*Artificial Intelligence~Alien Influence~Alien Intelligence~All in|What is an Arduino?*Microcontroller~IDE~Processor~Micromemory"</string>
+  <string name="psCiencia">"Who established the formula: E=MC2?*Albert Einstein~Isaac Newton~Stephen Hawking~Galileo Galilei|What does the core of a cell contains?*ADN~Neutrons~Protons~Electrons|Who discovered radioactivity?*Marie Curie~Albert Einstein~Charles Darwin~Nikola Tesla|How many elements are there in the Periodic Table?*118~108~364~231|What is the most abundant element on Earth?*Hydrogen~Oxygen~Petroleum~Nitrogen"</string>
+  <string name="psGeografía">"Which countries share the largest border in the world? *United States and Canada~Russia and China~United States and Mexico~North Korea and South Korea|What country is the largest in the world?*Russia~United States~Africa~China|Which is the largest state in the United States?*Alaska~Texas~California~New York|How many island does Japan have?*6852~5~6~13|What is the difference between and island and a islet?*An islet is smaller and uninhabited~An islet is smaller~An islet is under water~An islet is artificially made"</string>
+  <string name="psPeliculas">"What is the highest grossing movie of all time?*Avatar~Space Jam~Titanic~Interstellar|In what year was the first movie ever shown released?*1895~1994~1906~2020|Who is the main actor in the movie “The Shinning”?*Jack Nicholson~Jack Black~Jack Kirby~Jack Lemmon|Who directed the movie “The Sixth Sense''?*M. Night Shyamalan~Quentin Tarantino~Alfred Hitchcock~Steven Spielberg|From which country is the movie "Tomb of the Fireflies"?*Japan~Mexico~United States~Russia"</string>
+  <string name="completed">Game Completed!</string>
+  <string name="close">Exit</string>
+  <string name="stay">Continue</string>
+  <string name="score">Score:</string>
+  <string name="right">Right:</string>
+  <string name="wrong">Wrong:</string>
+  <string name="topic">Topics</string>
+  <string name="all">All</string>
+  <string name="movies">Movies</string>
+  <string name="geography">Geography</string>
+  <string name="science">Science</string>
+  <string name="history">History</string>
+  <string name="programming">Programming</string>
+  <string name="videogames">Videogames</string>
+  <string name="numOfQuestions"># Of questions</string>
+  <string name="hard">Hard</string>
+  <string name="easy">Easy</string>
+  <string name="dif">Difficulty</string>
+  <string name="save">Save</string>
+  <string name="allowClues">Allow clues</string>
+  <string name="play">Play</string>
+  <string name="opts">OPTIONS</string>
+</resources>
