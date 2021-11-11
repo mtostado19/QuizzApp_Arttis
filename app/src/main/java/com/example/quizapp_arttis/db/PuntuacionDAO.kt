@@ -7,6 +7,9 @@ interface PuntuacionDAO {
     @Query("Select * FROM score")
     fun getAll() : List<Puntuacion>
 
+    @Query("SELECT * FROM score ORDER BY score DESC LIMIT 5")
+    fun getTopFive() : List<Puntuacion>
+
     @Update
     fun update(score: Puntuacion)
 

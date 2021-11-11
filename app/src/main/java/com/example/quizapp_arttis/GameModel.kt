@@ -32,18 +32,20 @@ class GameModel(val questions: MutableList<Question>, val options: Options ) : V
         options.numberOfQuestions = options.numberOfQuestions.toInt()
     }
 
-    fun getValues(): IntArray {
-        val returnValue = intArrayOf(extraClue, clues, currentIndex, hintsUsed)
-        return returnValue
+    fun getValues(): String {
+        val returnValue = SavedData(extraClue, clues, currentIndex, hintsUsed)
+        return gson.toJson(returnValue)
     }
 
     fun getMax() = options.numberOfQuestions
 
-    fun setValues(data: IntArray) {
-        extraClue = data[0]
-        clues = data[1]
-        currentIndex = data[2]
-        hintsUsed = data[3]
+    fun setValues(dataString: String) {
+        val data = gson.fromJson(dataString, SavedData::class.java)
+
+        extraClue = data.extraClue
+        clues = data.clues
+        currentIndex = data.currentIndex
+        hintsUsed = data.hintsUsed
     }
     
     fun getQuestionString() : String {

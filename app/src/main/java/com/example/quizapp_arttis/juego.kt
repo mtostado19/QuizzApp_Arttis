@@ -8,7 +8,13 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.room.Room
+import com.example.room_demo_application.db.AppDatabase
+import com.example.room_demo_application.db.JuegoActual
+import com.example.room_demo_application.db.Puntuacion
 import com.google.gson.Gson
+import java.util.*
+import kotlin.collections.ArrayList
 
 class juego : AppCompatActivity()  {
     private lateinit var txtQuestion: TextView
@@ -26,17 +32,28 @@ class juego : AppCompatActivity()  {
     private lateinit var scoreImage: ImageView
     private lateinit var questionString : String
     private lateinit var optionsString : String
+    private lateinit var valuesString : String
 
     private lateinit var gameModel: GameModel
+    private  lateinit var db : AppDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_juego)
 
-        var gson = Gson()
+        db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "game_v3.db"
+        ).allowMainThreadQueries().build()
 
-        if (savedInstanceState != null) {
-            questionString = savedInstanceState.getString("KEY_GAME_MODEL_QUESTIONS").toString()
-            optionsString = savedInstanceState.getString("KEY_GAME_MODEL_OPTIONS").toString()
+        var gson = Gson()
+        val currentGame = db.currenGameDAO()
+        val scoreSetter = db.scoreDAO()
+        val currentGameValues = currentGame.getSpecific("general")
+        if (!currentGameValues.isEmpty()) {
+            questionString = currentGameValues[0].questions
+            optionsString = currentGameValues[0].options
+            valuesString = currentGameValues[0].gameValues
         } else {
             questionString = intent.getStringExtra("Preguntas").toString()
             optionsString = intent.getStringExtra("options").toString()
@@ -76,6 +93,8 @@ class juego : AppCompatActivity()  {
         btnPrev = findViewById(R.id.prev_button)
         btnClue = findViewById<ImageButton>(R.id.clue_button)
 
+        Log.d("Valueeees", gson.toJson(scoreSetter.getTopFive()))
+
         var arrayAdapter : ArrayAdapter<String>
         var lvData = gameModel.getCurrentQuestion().values.toMutableList()
 
@@ -88,9 +107,9 @@ class juego : AppCompatActivity()  {
         }
 
 
-        if (savedInstanceState != null) {
-            savedInstanceState.getIntArray("KEY_GAME_MODEL_Values")?.let { gameModel.setValues(it) }
-
+        if (!currentGameValues.isEmpty()) {
+//            savedInstanceState.getIntArray("KEY_GAME_MODEL_Values")?.let { gameModel.setValues(it) }
+            gameModel.setValues(valuesString)
             val currentQuestion = gameModel.getCurrentQuestion()
             arrayAdapter.clear()
             arrayAdapter.addAll(currentQuestion.values.toCollection(ArrayList()))
@@ -115,14 +134,6 @@ class juego : AppCompatActivity()  {
         txtQuestion.text = gameModel.getCurrentQuestion().text
         txtCurrent.text = "${gameModel.getIndex() + 1}/${gameModel.getMax()}"
         txtClues.text = "${resources.getString(R.string.clue)} ${pistas}"
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Are you sure!")
-        builder.setMessage("Do you want to close the game?")
-        builder.setNegativeButton("Yes", { dialogInterface: DialogInterface, i: Int ->
-            finish()
-        })
-        builder.setPositiveButton("No", { dialogInterface: DialogInterface, i: Int -> })
 
         var buildScore = AlertDialog.Builder(this)
         buildScore.setTitle(resources.getString(R.string.completed))
@@ -228,6 +239,10 @@ class juego : AppCompatActivity()  {
                  }
                  buildScore.create()
                  buildScore.show()
+
+                 val currentDay = "${Calendar.getInstance().get(Calendar.YEAR)}-${Calendar.getInstance().get(Calendar.MONTH) + 1}-${Calendar.getInstance().get(Calendar.DAY_OF_MONTH)}"
+                 scoreSetter.insert(Puntuacion(scoreSetter.getAll().size, currentDay, score[3], score[2], "general"))
+                 currentGame.deleteSpecific("general")
                  // Toast.makeText(this, score.toString(), Toast.LENGTH_LONG).show()
              }
 
@@ -260,6 +275,9 @@ class juego : AppCompatActivity()  {
                     }
                     buildScore.create()
                     buildScore.show()
+                    val currentDay = "${Calendar.getInstance().get(Calendar.YEAR)}-${Calendar.getInstance().get(Calendar.MONTH) + 1}-${Calendar.getInstance().get(Calendar.DAY_OF_MONTH)}"
+                    scoreSetter.insert(Puntuacion(scoreSetter.getAll().size, currentDay, score[3], score[2], "general"))
+                    currentGame.deleteSpecific("general")
                     // Toast.makeText(this, score.toString(), Toast.LENGTH_LONG).show()
                 }
                 return@setOnClickListener
@@ -285,10 +303,36 @@ class juego : AppCompatActivity()  {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         Log.d("QUIZZAPP_DEBUG", "onSaveInstanceState")
-        outState.putIntArray("KEY_GAME_MODEL_Values", gameModel.getValues())
-        outState.putString("KEY_GAME_MODEL_QUESTIONS", gameModel.getQuestionString())
-        outState.putString("KEY_GAME_MODEL_OPTIONS", gameModel.getOptionsString1())
 
+        val currentGame = db.currenGameDAO()
+        if (currentGame.getSpecific("general").isEmpty()) {
+            val gameLength = currentGame.getAll().size
+            currentGame.insert(JuegoActual(gameLength, gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), "general"))
+        } else {
+            val gameOcurring = currentGame.getSpecific("general")[0]
+            currentGame.update(JuegoActual(gameOcurring.id,gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), "general") )
+        }
+    }
+
+    override fun onBackPressed() {
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Are you sure!")
+        builder.setMessage("Do you want to close the game?")
+        builder.setNegativeButton("Yes") { dialogInterface: DialogInterface, i: Int ->
+            val currentGame = db.currenGameDAO()
+            if (currentGame.getSpecific("general").isEmpty()) {
+                val gameLength = currentGame.getAll().size
+                currentGame.insert(JuegoActual(gameLength, gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), "general"))
+            } else {
+                val gameOcurring = currentGame.getSpecific("general")[0]
+                currentGame.update(JuegoActual(gameOcurring.id,gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), "general") )
+            }
+            finish()
+        }
+        builder.setPositiveButton("No", { dialogInterface: DialogInterface, i: Int -> })
+
+        builder.create().show()
     }
 
 

@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import androidx.room.Room
 import com.example.room_demo_application.db.AppDatabase
+import com.example.room_demo_application.db.JuegoActual
 import com.example.room_demo_application.db.Opciones
 import com.example.room_demo_application.db.Puntuacion
 import com.google.gson.Gson
@@ -27,15 +28,15 @@ class MainActivity : AppCompatActivity() {
         db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "game_v2.db"
+            "game_v3.db"
         ).allowMainThreadQueries().build()
 
-        val optionsDao = db.optionsDAO()
+        val currentGame = db.currenGameDAO()
         var deleteGSON = Gson()
-//         optionsDao.insert(Opciones(0,1, 1, "asdaw", true, "delete" ))
-         optionsDao.deleteSpecific("delete")
+        // currentGame.insert(JuegoActual(0, "questions", "options", "[1, 2, 3, 4]", "delete" ))
+        currentGame.deleteSpecific("delete")
 
-        Log.d("HEREEEEE", deleteGSON.toJson(optionsDao.getAll()))
+        Log.d("HEREEEEE", deleteGSON.toJson(currentGame.getAll()))
 
         var QuestionList = mutableListOf<Question>()
 
