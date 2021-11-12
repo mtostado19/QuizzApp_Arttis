@@ -1,12 +1,15 @@
 package com.example.quizapp_arttis
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.room.Room
 import com.example.room_demo_application.db.AppDatabase
+import com.example.room_demo_application.db.JuegoActual
 import com.example.room_demo_application.db.Opciones
 import com.example.room_demo_application.db.Puntuacion
 import com.google.gson.Gson
@@ -16,10 +19,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnOption: Button
     private lateinit var btnPuntacion: Button
     var NumPreguntas = 6
-    var dificultad = 1 // 1 : 2 - 2 : 3 - 3 : 4
+    var dificultad = 1
     var pistas = false
-    private  lateinit var db : AppDatabase
 
+    private lateinit var Temas : ArrayList<String>
+    private lateinit var db : AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +35,21 @@ class MainActivity : AppCompatActivity() {
         db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "game_v2.db"
+            "game_v3.db"
         ).allowMainThreadQueries().build()
 
-        val optionsDao = db.optionsDAO()
-        var deleteGSON = Gson()
-//         optionsDao.insert(Opciones(0,1, 1, "asdaw", true, "delete" ))
-         optionsDao.deleteSpecific("delete")
+        val currentGame = db.currenGameDAO()
+        val optionsDB = db.optionsDAO()
+        val deleteGson = Gson()
+        val existingOptions = optionsDB.getSpecific("general")
 
-        Log.d("HEREEEEE", deleteGSON.toJson(optionsDao.getAll()))
+
+        if (!existingOptions.isEmpty()) {
+            NumPreguntas = existingOptions[0].numQuestions
+            dificultad = existingOptions[0].difficulty
+            pistas = existingOptions[0].clues
+        }
+
 
         var QuestionList = mutableListOf<Question>()
 
@@ -50,37 +60,25 @@ class MainActivity : AppCompatActivity() {
         var QuestionPeliculas = resources.getString(R.string.psPeliculas)
         var QuestionProgramación = resources.getString(R.string.psProgramación)
 
-        var Temas = mutableListOf<String>(
+        Temas = mutableListOf<String>(
             QuestionGeografia,
             QuestionVideojuegos,
             QuestionHistoria,
             QuestionCiencia,
             QuestionPeliculas,
             QuestionProgramación
-        )
+        ).toCollection(ArrayList())
 
-        if (savedInstanceState != null) {
-            NumPreguntas = savedInstanceState.getInt("NumPreguntas")
-            dificultad = savedInstanceState.getInt("dificultad")
-            pistas = savedInstanceState.getBoolean("pistas")
+        val existingOPTS = optionsDB.getSpecific("general")
+        Log.d("Optioooooons", deleteGson.toJson(existingOPTS))
+        if (!existingOPTS.isEmpty()) {
+            NumPreguntas = existingOPTS[0].numQuestions
+            dificultad = existingOPTS[0].difficulty
+            pistas = existingOPTS[0].clues
+            Temas = existingOPTS[0].categories.split("^").toCollection(ArrayList())
         }
 
-        if (intent != null) {
-            NumPreguntas = intent.getIntExtra("NumPreguntas", 6)
-            dificultad = intent.getIntExtra("dificultad", 1)
-            pistas = intent.getBooleanExtra("pistas", false)
-            Temas =
-                intent.getStringArrayListExtra("Temas")?.toMutableList() ?: mutableListOf<String>(
-                    QuestionGeografia,
-                    QuestionVideojuegos,
-                    QuestionHistoria,
-                    QuestionCiencia,
-                    QuestionPeliculas,
-                    QuestionProgramación
-                )
-        }
-
-
+        Log.d("Optioooooons", deleteGson.toJson(Temas))
         // ayudas de control de prguntas
         var banderaOtaku = false
         var tostazzz = NumPreguntas / Temas.size // Casi Par
@@ -96,10 +94,11 @@ class MainActivity : AppCompatActivity() {
 
 
         for (topicQuestion in Temas) {
+            Log.d("Optioooooons", "1")
 
             var questionsTxt = topicQuestion.split("|") // obtiene preguntas y respuestas
             var questionAnswers =
-                questionsTxt.map { it.split("*") } // separa las preuntas de las respuestas
+                questionsTxt.shuffled().map { it.split("*") } // separa las preuntas de las respuestas
 
             var questionResult =
                 mutableListOf<List<List<String>>>() // crea listas para guardar el conjunto de lista de pregunta y listas de respuestan en el mismo conjunto
@@ -317,22 +316,53 @@ class MainActivity : AppCompatActivity() {
         var optionObj = Options(dificultad, NumPreguntas, pistas)
 
         btnPlay.setOnClickListener { _ ->
-            val intent = Intent(this, juego::class.java)
-            QuestionList.shuffle()
-            var gson = Gson()
-            var QuestionString = gson.toJson(QuestionList)
-            var ObstionString = gson.toJson(optionObj)
-            intent.putExtra("Preguntas", QuestionString)
-            intent.putExtra("options", ObstionString)
-            startActivity(intent)
+            val activeGame = currentGame.getSpecific("general")
+            if (!activeGame.isEmpty()) {
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Resume game")
+                builder.setMessage("Do you want to continue your last session")
+                builder.setNegativeButton("Yes") { dialogInterface: DialogInterface, i: Int ->
+                    val intent = Intent(this, juego::class.java)
+                    var QuestionString = activeGame[0].questions
+                    var ObstionString = activeGame[0].options
+
+                    intent.putExtra("Preguntas", QuestionString)
+                    intent.putExtra("options", ObstionString)
+                    startActivity(intent)
+                }
+                builder.setPositiveButton("No") { dialogInterface: DialogInterface, i: Int ->
+                    currentGame.deleteSpecific("general")
+                    val intent = Intent(this, juego::class.java)
+                    QuestionList.shuffle()
+                    val gson = Gson()
+                    val QuestionString = gson.toJson(QuestionList)
+                    val ObstionString = gson.toJson(optionObj)
+                    intent.putExtra("Preguntas", QuestionString)
+                    intent.putExtra("options", ObstionString)
+                    startActivity(intent)
+                }
+
+                builder.create().show()
+            } else {
+                val intent = Intent(this, juego::class.java)
+                QuestionList.shuffle()
+                val gson = Gson()
+                val QuestionString = gson.toJson(QuestionList)
+                val ObstionString = gson.toJson(optionObj)
+                intent.putExtra("Preguntas", QuestionString)
+                intent.putExtra("options", ObstionString)
+                startActivity(intent)
+            }
         }
 
         btnOption.setOnClickListener { _ ->
             val intent = Intent(this, OptionActivity::class.java)
-            intent.putExtra("NumPreguntas", NumPreguntas)
-            intent.putExtra("dificultad", dificultad)
-            intent.putExtra("pistas", pistas)
-            intent.putStringArrayListExtra("Temas", ArrayList(Temas))
+            val optExist = optionsDB.getSpecific("general")
+            if (optExist.isEmpty()) {
+                optionsDB.insert(Opciones(0, dificultad, NumPreguntas, Temas.joinToString("^"), pistas, "general"))
+            } else {
+                optionsDB.update(Opciones(0, dificultad, NumPreguntas, Temas.joinToString("^"), pistas, "general"))
+            }
             startActivity(intent)
         }
 
@@ -345,9 +375,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt("NumPreguntas",NumPreguntas)
-        outState.putInt("dificultad",dificultad)
-        outState.putBoolean("pistas", pistas)
+        val optionsDB = db.optionsDAO()
+        val existingOptions = optionsDB.getSpecific("general")
+        if (existingOptions.isEmpty()) {
+            optionsDB.insert(Opciones(0, dificultad, NumPreguntas, Temas.joinToString("^"), pistas, "general"))
+        } else {
+            optionsDB.update(Opciones(0, dificultad, NumPreguntas, Temas.joinToString("^"), pistas, "general"))
+        }
     }
 
 }
