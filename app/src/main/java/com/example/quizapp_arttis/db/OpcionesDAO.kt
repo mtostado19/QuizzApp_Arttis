@@ -7,6 +7,9 @@ interface OpcionesDAO {
     @Query("Select * FROM options")
     fun getAll() : List<Opciones>
 
+    @Query("Select * FROM options WHERE user = :user")
+    fun getSpecific(user: String) : List<Opciones>
+
     @Update
     fun update(options: Opciones)
 

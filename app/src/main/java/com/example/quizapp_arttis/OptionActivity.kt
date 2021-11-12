@@ -3,10 +3,15 @@ package com.example.quizapp_arttis
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Switch
 import android.widget.Toast
+import androidx.room.Room
+import com.example.room_demo_application.db.AppDatabase
+import com.example.room_demo_application.db.Opciones
+import com.google.gson.Gson
 
 
 class OptionActivity : AppCompatActivity() {
@@ -23,6 +28,7 @@ class OptionActivity : AppCompatActivity() {
     private lateinit var btnRandom : Button
     private lateinit var btnSave : Button
     private lateinit var swtichPistas : Switch
+    private lateinit var db : AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +47,15 @@ class OptionActivity : AppCompatActivity() {
         btnSave = findViewById(R.id.btnSave)
         swtichPistas = findViewById(R.id.switch2)
 
+        db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "game_v3.db"
+        ).allowMainThreadQueries().build()
+
+        val optionsDB = db.optionsDAO()
+
+
         var QuestionGeografia = resources.getString(R.string.psGeografía)
         var QuestionVideojuegos = resources.getString(R.string.psVideojuegos)
         var QuestionHistoria = resources.getString(R.string.psHistoria)
@@ -56,12 +71,12 @@ class OptionActivity : AppCompatActivity() {
         var pistas = false
         // Aqui termina la info que se manda a mainActivity
 
-        if (intent!=null){
-            println("************** SI ENTRA")
-            NumPreguntas = intent.getIntExtra("NumPreguntas", 6 )
-            dificultad = intent.getIntExtra("dificultad", 1)
-            pistas = intent.getBooleanExtra("pistas", false)
-            Temas = intent.getStringArrayListExtra("Temas")?.toMutableList() ?: mutableListOf<String>(QuestionGeografia,QuestionVideojuegos,QuestionHistoria,QuestionCiencia,QuestionPeliculas,QuestionProgramación)
+        val optionsExist = optionsDB.getSpecific("general")
+        if (!optionsExist.isEmpty()) {
+            NumPreguntas = optionsExist[0].numQuestions
+            Temas = optionsExist[0].categories.split("^").toCollection(ArrayList())
+            dificultad = optionsExist[0].difficulty
+            pistas = optionsExist[0].clues
         }
 
         println(Temas)
@@ -188,6 +203,7 @@ class OptionActivity : AppCompatActivity() {
             dificultad = sliderDificultad.value.toInt()
             pistas = swtichPistas.isChecked
             Temas.clear()
+
             if (ckbGeo.isChecked){
                 Temas.add(QuestionGeografia)
             }
@@ -210,11 +226,15 @@ class OptionActivity : AppCompatActivity() {
             if (Temas.size == 6 && NumPreguntas == 5 || Temas.size==1 && NumPreguntas>5 ){ // falta validar que si es un tema no puede elegir mas de 5 preguntas
                 Toast.makeText(this, "Mas temas que preguntas o Mas preguntas que temas", Toast.LENGTH_LONG).show()
             } else {
+
                 var intent = Intent(this , MainActivity::class.java)
-                intent.putStringArrayListExtra("Temas", ArrayList(Temas))
-                intent.putExtra("NumPreguntas", NumPreguntas)
-                intent.putExtra("dificultad", dificultad)
-                intent.putExtra("pistas", pistas)
+                val existingOptions = optionsDB.getSpecific("general")
+                if (existingOptions.isEmpty()) {
+                    optionsDB.insert(Opciones(0, dificultad, NumPreguntas, ArrayList(Temas).joinToString("^"), pistas, "general"))
+                } else {
+                    optionsDB.update(Opciones(0, dificultad, NumPreguntas, ArrayList(Temas).joinToString("^"), pistas, "general"))
+                }
+
                 startActivity(intent)
             }
         }
