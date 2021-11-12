@@ -14,15 +14,19 @@ import com.google.gson.Gson
 class MainActivity : AppCompatActivity() {
     private lateinit var btnPlay: Button
     private lateinit var btnOption: Button
+    private lateinit var btnPuntacion: Button
     var NumPreguntas = 6
     var dificultad = 1 // 1 : 2 - 2 : 3 - 3 : 4
     var pistas = false
     private  lateinit var db : AppDatabase
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         btnPlay = findViewById(R.id.play_button)
         btnOption = findViewById(R.id.btn_option)
+        btnPuntacion = findViewById(R.id.btn_puntuacion)
 
         db = Room.databaseBuilder(
             applicationContext,
@@ -329,6 +333,11 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("dificultad", dificultad)
             intent.putExtra("pistas", pistas)
             intent.putStringArrayListExtra("Temas", ArrayList(Temas))
+            startActivity(intent)
+        }
+
+        btnPuntacion.setOnClickListener { _ ->
+            val intent = Intent(this, PointsActivity::class.java)
             startActivity(intent)
         }
 

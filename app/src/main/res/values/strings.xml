@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="prev">Prev</string>
-  <string name="next">Next</string>
-  <string name="app_name">Arttis Questions</string>
-  <string name="clue">Pistas:</string>
-  <string name="psVideojuegos"> "¿Qué letra es el identificador de cuando un juego es apto para todo público?*E~M~T~C|¿Cuántos juegos hay en la saga de Dark Souls?*5~4~3~7|Según la línea del tiempo de los juegos. ¿Qué juego de Halo ocurre primero?*Halo Wars~Halo CE~Halo Infinte~Halo Reach|¿Cual es el personaje principal de la saga “The legend of Zelda”?*Link~Zelda~Luis~Panchito|Nombre del juego de Mario bros en el cual principalmente viajar entre planetas*Super Mario Galaxy~Super Smash Bros~Mario Kart~Buscaminas" </string>
-  <string name="psHistoria">"¿Cuánto duró la guerra de los 100 años?*116 años~100 años~97 años~143 años|¿Cuál fue la primera gran civilización humana?*Sumerios~Egipcios~Mesopotamia~China|¿Cuál fue el nombre de la primera bomba nuclear utilizada en tiempos de guerra?*Trinity~Little Boy~Big Boy~Fat Man|Nombre del primer ser vivo en alcanzar el espacio.*Laika~George Washington~Yuri Gagarin~Neil Armstrong|¿En qué año fue el periodo sengoku de japón?*1467 - 1568~1895 - 1932~3 - 400~1186 - 1247"</string>
-  <string name="psProgramación">"¿Que es una variable?*Espacio de información~Usuario de una Base de datos~Un Pokemon~Un digimon|¿Qué significa la nomenclatura MERN?*Mongodb-express-React-Node~Mongodb-express-Ruby-Nextjs~Minecraft-Esmeraldas-Redstone-No~Talvez~Mongodb-Emmet-Ruby-Nextjs|¿Forma correcta de filter un arreglo en js?*Array.filter((x)=>==x)~plz.doArray([filter])~Array = filter~Array.filter(x)|¿Qué es IA?*Inteligencia Artificial~Influenza Alienigena~Internos Algoritmos~Imaginación Amplificada|¿Que es un arduino?*Microcontrolador~IDE~Procesador~Micromemoria"</string>
-  <string name="psCiencia"> "¿Quién desarrolló la fórmula: E=MC2?*Albert Einstein~Isaac Newton~Stephen Hawking~Galileo Galilei|¿Qué contiene el núcleo de una célula?*ADN~Neutrones~Protones~Electrones|¿Quién descubrió la radioactividad?*Marie Curie~Albert Einstein~Charles Darwin~Nikola Tesla|¿Cuántos elementos tiene la tabla periódica?*118~108~364~231|¿Cuál es el elemento más abundante en la tierra?*Hidrógeno~Oxigeno~Petroleo~Nitrogeno" </string>
-  <string name="psGeografía">"¿Qué países tienen la frontera más grande del mundo? *Estados Unidos y Canadá~Rusia y China~Estados Unidos y Mexico~Corea del Norte y Corea del Sur|¿Cual es el país más grande del mundo?*Rusia~Estados Unidos~Africa~China|¿Cuál es el estado más grande de los Estados Unidos?*Alaska~Texas~California~Nueva York|¿Cuántas islas tiene Japón?*6852~5~6~13|¿Cuál es la diferencia entre isla e islote?*El islote es de menor tamaño y deshabitado~El islote es más grande~El islote esta bajo el agua~El islote es artificial"</string>
-  <string name="psPeliculas">"¿Cuál es la película más taquillera de la historia?*Avatar~Space Jam~Titanic~Interestelar|¿Cuándo se estrenó la primera película de la historia?*1895~1994~1906~2020|¿Quién es el actor principal de la película “El Resplandor”?*Jack Nicholson~Jack Black~Jack Kirby~Jack Lemmon|¿Quién dirigió la película “sexto sentido''?*M. Night Shyamalan~Quentin Tarantino~Alfred Hitchcock~Steven Spielberg|¿De qué país es la película “La Tumba de las Luciérnagas?*Japón~México~Estados Unidos~Rusia"</string>
-  <string name="completed">Juego completado!</string>
-  <string name="close">Cerrar</string>
-  <string name="stay">Continuar</string>
-  <string name="score">Puntos:</string>
-  <string name="right">Buenas:</string>
-  <string name="wrong">Malas:</string>
-  <string name="topic">Temas</string>
-  <string name="all">Todos</string>
-  <string name="movies">Películas</string>
-  <string name="geography">Geografía</string>
-  <string name="science">Ciencia</string>
-  <string name="history">Historia</string>
-  <string name="programming">Programación</string>
-  <string name="videogames">Videojuegos</string>
-  <string name="numOfQuestions"># De preguntas</string>
-  <string name="hard">Dificil</string>
-  <string name="easy">Facil</string>
-  <string name="dif">Dificultad</string>
-  <string name="save">Guardar</string>
-  <string name="allowClues">Permitir pistas</string>
-  <string name="play">JUGAR</string>
-  <string name="opts">OPCIONES</string>
+    <string name="prev">Prev</string>
+    <string name="next">Next</string>
+    <string name="app_name">Arttis Questions</string>
+    <string name="clue">Pistas:</string>
+    <string name="psVideojuegos"> "¿Qué letra es el identificador de cuando un juego es apto para todo público?*E~M~T~C|¿Cuántos juegos hay en la saga de Dark Souls?*5~4~3~7|Según la línea del tiempo de los juegos. ¿Qué juego de Halo ocurre primero?*Halo Wars~Halo CE~Halo Infinte~Halo Reach|¿Cual es el personaje principal de la saga “The legend of Zelda”?*Link~Zelda~Luis~Panchito|Nombre del juego de Mario bros en el cual principalmente viajar entre planetas*Super Mario Galaxy~Super Smash Bros~Mario Kart~Buscaminas" </string>
+    <string name="psHistoria">"¿Cuánto duró la guerra de los 100 años?*116 años~100 años~97 años~143 años|¿Cuál fue la primera gran civilización humana?*Sumerios~Egipcios~Mesopotamia~China|¿Cuál fue el nombre de la primera bomba nuclear utilizada en tiempos de guerra?*Trinity~Little Boy~Big Boy~Fat Man|Nombre del primer ser vivo en alcanzar el espacio.*Laika~George Washington~Yuri Gagarin~Neil Armstrong|¿En qué año fue el periodo sengoku de japón?*1467 - 1568~1895 - 1932~3 - 400~1186 - 1247"</string>
+    <string name="psProgramación">"¿Que es una variable?*Espacio de información~Usuario de una Base de datos~Un Pokemon~Un digimon|¿Qué significa la nomenclatura MERN?*Mongodb-express-React-Node~Mongodb-express-Ruby-Nextjs~Minecraft-Esmeraldas-Redstone-No~Talvez~Mongodb-Emmet-Ruby-Nextjs|¿Forma correcta de filter un arreglo en js?*Array.filter((x)=>==x)~plz.doArray([filter])~Array = filter~Array.filter(x)|¿Qué es IA?*Inteligencia Artificial~Influenza Alienigena~Internos Algoritmos~Imaginación Amplificada|¿Que es un arduino?*Microcontrolador~IDE~Procesador~Micromemoria"</string>
+    <string name="psCiencia"> "¿Quién desarrolló la fórmula: E=MC2?*Albert Einstein~Isaac Newton~Stephen Hawking~Galileo Galilei|¿Qué contiene el núcleo de una célula?*ADN~Neutrones~Protones~Electrones|¿Quién descubrió la radioactividad?*Marie Curie~Albert Einstein~Charles Darwin~Nikola Tesla|¿Cuántos elementos tiene la tabla periódica?*118~108~364~231|¿Cuál es el elemento más abundante en la tierra?*Hidrógeno~Oxigeno~Petroleo~Nitrogeno" </string>
+    <string name="psGeografía">"¿Qué países tienen la frontera más grande del mundo? *Estados Unidos y Canadá~Rusia y China~Estados Unidos y Mexico~Corea del Norte y Corea del Sur|¿Cual es el país más grande del mundo?*Rusia~Estados Unidos~Africa~China|¿Cuál es el estado más grande de los Estados Unidos?*Alaska~Texas~California~Nueva York|¿Cuántas islas tiene Japón?*6852~5~6~13|¿Cuál es la diferencia entre isla e islote?*El islote es de menor tamaño y deshabitado~El islote es más grande~El islote esta bajo el agua~El islote es artificial"</string>
+    <string name="psPeliculas">"¿Cuál es la película más taquillera de la historia?*Avatar~Space Jam~Titanic~Interestelar|¿Cuándo se estrenó la primera película de la historia?*1895~1994~1906~2020|¿Quién es el actor principal de la película “El Resplandor”?*Jack Nicholson~Jack Black~Jack Kirby~Jack Lemmon|¿Quién dirigió la película “sexto sentido''?*M. Night Shyamalan~Quentin Tarantino~Alfred Hitchcock~Steven Spielberg|¿De qué país es la película “La Tumba de las Luciérnagas?*Japón~México~Estados Unidos~Rusia"</string>
+    <string name="completed">Juego completado!</string>
+    <string name="close">Cerrar</string>
+    <string name="stay">Continuar</string>
+    <string name="score">Puntos:</string>
+    <string name="right">Buenas:</string>
+    <string name="wrong">Malas:</string>
+    <string name="topic">Temas</string>
+    <string name="all">Todos</string>
+    <string name="movies">Películas</string>
+    <string name="geography">Geografía</string>
+    <string name="science">Ciencia</string>
+    <string name="history">Historia</string>
+    <string name="programming">Programación</string>
+    <string name="videogames">Videojuegos</string>
+    <string name="numOfQuestions"># De preguntas</string>
+    <string name="hard">Dificil</string>
+    <string name="easy">Facil</string>
+    <string name="dif">Dificultad</string>
+    <string name="save">Guardar</string>
+    <string name="allowClues">Permitir pistas</string>
+    <string name="play">JUGAR</string>
+    <string name="opts">OPCIONES</string>
+    <string name="punt">Puntuacion</string>
 </resources>

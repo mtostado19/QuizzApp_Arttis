@@ -14,7 +14,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="<--"
+            android:text="exit"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textSize="30dp"/>
@@ -37,9 +37,11 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPuntuacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
     </androidx.recyclerview.widget.RecyclerView>
+
 
 </LinearLayout>

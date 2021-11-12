@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizApp_Arttis">
         <activity
+            android:name=".PointsActivity"
+            android:exported="true" />
+        <activity
             android:name=".OptionActivity"
             android:exported="true" />
         <activity
