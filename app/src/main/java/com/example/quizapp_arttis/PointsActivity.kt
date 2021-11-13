@@ -22,17 +22,20 @@ class PuntosAdapter(val puntos: List<Puntuacion>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var txtPuntuacion: TextView
         private var txtFecha: TextView
+        private var txtHints : TextView
 
         private lateinit var points: Puntuacion
 
         init {
             txtPuntuacion = view.findViewById(R.id.id_points)
             txtFecha = view.findViewById(R.id.id_date)
+            txtHints = view.findViewById(R.id.id_hints)
 
         }
         fun bind(points: Puntuacion) {
             txtPuntuacion.text = points.score.toString()
             txtFecha.text = points.date
+            txtHints.text = points.hints.toString()
 
             this.points = points
         }
