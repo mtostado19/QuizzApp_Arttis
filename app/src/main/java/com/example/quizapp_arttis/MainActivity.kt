@@ -319,9 +319,9 @@ class MainActivity : AppCompatActivity() {
             val activeGame = currentGame.getSpecific("general")
             if (!activeGame.isEmpty()) {
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("Resume game")
-                builder.setMessage("Do you want to continue your last session")
-                builder.setNegativeButton("Yes") { dialogInterface: DialogInterface, i: Int ->
+                builder.setTitle(resources.getString(R.string.resumeGame))
+                builder.setMessage(resources.getString(R.string.resumeGameQuestion))
+                builder.setNegativeButton(resources.getString(R.string.confirmResponse)) { dialogInterface: DialogInterface, i: Int ->
                     val intent = Intent(this, juego::class.java)
                     var QuestionString = activeGame[0].questions
                     var ObstionString = activeGame[0].options
@@ -330,7 +330,7 @@ class MainActivity : AppCompatActivity() {
                     intent.putExtra("options", ObstionString)
                     startActivity(intent)
                 }
-                builder.setPositiveButton("No") { dialogInterface: DialogInterface, i: Int ->
+                builder.setPositiveButton(resources.getString(R.string.RejectRespone)) { dialogInterface: DialogInterface, i: Int ->
                     currentGame.deleteSpecific("general")
                     val intent = Intent(this, juego::class.java)
 

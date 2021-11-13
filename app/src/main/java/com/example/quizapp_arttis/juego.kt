@@ -339,9 +339,9 @@ class juego : AppCompatActivity()  {
     override fun onBackPressed() {
 
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Are you sure!")
-        builder.setMessage("Do you want to close the game?")
-        builder.setNegativeButton("Yes") { dialogInterface: DialogInterface, i: Int ->
+        builder.setTitle(resources.getString(R.string.exitGame))
+        builder.setMessage(resources.getString(R.string.extiGameQuestion))
+        builder.setNegativeButton(resources.getString(R.string.confirmResponse)) { dialogInterface: DialogInterface, i: Int ->
             val currentGame = db.currenGameDAO()
             if (currentGame.getSpecific("general").isEmpty()) {
                 val gameLength = currentGame.getAll().size
@@ -352,7 +352,7 @@ class juego : AppCompatActivity()  {
             }
             finish()
         }
-        builder.setPositiveButton("No", { dialogInterface: DialogInterface, i: Int -> })
+        builder.setPositiveButton(resources.getString(R.string.RejectRespone), { dialogInterface: DialogInterface, i: Int -> })
 
         builder.create().show()
     }

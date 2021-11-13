@@ -33,4 +33,10 @@
   <string name="play">Play</string>
   <string name="opts">OPTIONS</string>
   <string name="punt">High Score</string>
+  <string name="resumeGame">Resume Game</string>
+  <string name="resumeGameQuestion">Do you want to continue your last session?</string>
+  <string name="exitGame">Are you sure!</string>
+  <string name="extiGameQuestion">Do you want to close the game?</string>
+  <string name="confirmResponse">Yes</string>
+  <string name="RejectRespone">No</string>
 </resources>
