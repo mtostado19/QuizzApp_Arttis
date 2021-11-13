@@ -224,7 +224,7 @@ class OptionActivity : AppCompatActivity() {
             }
 
             if (Temas.size == 6 && NumPreguntas == 5 || Temas.size==1 && NumPreguntas>5 ){ // falta validar que si es un tema no puede elegir mas de 5 preguntas
-                Toast.makeText(this, "Mas temas que preguntas o Mas preguntas que temas", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, resources.getString(R.string.errorMesageOptions), Toast.LENGTH_LONG).show()
             } else {
 
                 var intent = Intent(this , MainActivity::class.java)

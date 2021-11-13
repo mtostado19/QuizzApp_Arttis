@@ -39,4 +39,5 @@
   <string name="extiGameQuestion">Do you want to close the game?</string>
   <string name="confirmResponse">Yes</string>
   <string name="RejectRespone">No</string>
+  <string name="errorMesageOptions">Error, invalid options</string>
 </resources>
