@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/btn_points_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Menu"
@@ -36,10 +37,38 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/id_pointsTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Puntos:"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:layout_marginRight="80dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/id_dateTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date:"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:textAlignment="center"/>
+
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPuntuacion"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
     </androidx.recyclerview.widget.RecyclerView>
 

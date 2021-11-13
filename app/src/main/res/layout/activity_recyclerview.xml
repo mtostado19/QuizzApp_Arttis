@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#040232"
     android:gravity="top"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="65dp">
 
         <TextView
             android:id="@+id/id_points"
@@ -17,7 +17,10 @@
             android:layout_height="wrap_content"
             android:text="Puntos:"
             android:textSize="25dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:layout_marginRight="80dp"
+            android:textAlignment="center"
+            android:padding="10dp"/>
 
         <TextView
             android:id="@+id/id_date"
@@ -25,7 +28,9 @@
             android:layout_height="wrap_content"
             android:text="Date:"
             android:textSize="25dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:padding="10dp"/>
 
 
     </LinearLayout>

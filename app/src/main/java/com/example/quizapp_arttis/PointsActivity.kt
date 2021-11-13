@@ -1,35 +1,38 @@
 package com.example.quizapp_arttis
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
+import com.example.room_demo_application.db.AppDatabase
+import com.example.room_demo_application.db.Puntuacion
 import java.util.*
 
-data class Puntos(val puntuacion: Int, val fecha: String)
-
-class PuntosAdapter(val puntos: MutableList<Puntos>) :
+class PuntosAdapter(val puntos: List<Puntuacion>) :
     RecyclerView.Adapter<PuntosAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var txtPuntuacion: TextView
         private var txtFecha: TextView
 
-        private lateinit var points: Puntos
+        private lateinit var points: Puntuacion
 
         init {
             txtPuntuacion = view.findViewById(R.id.id_points)
             txtFecha = view.findViewById(R.id.id_date)
 
         }
-        fun bind(points: Puntos) {
-            txtPuntuacion.text = points.puntuacion.toString()
-            txtFecha.text = points.fecha
+        fun bind(points: Puntuacion) {
+            txtPuntuacion.text = points.score.toString()
+            txtFecha.text = points.date
 
             this.points = points
         }
@@ -51,6 +54,8 @@ class PuntosAdapter(val puntos: MutableList<Puntos>) :
 class PointsActivity : AppCompatActivity(){
 
     private lateinit var rv: RecyclerView
+    private lateinit var db : AppDatabase
+    private lateinit var btnMenu : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,12 +63,24 @@ class PointsActivity : AppCompatActivity(){
 
         rv = findViewById(R.id.rvPuntuacion)
         rv.layoutManager = LinearLayoutManager(this)
+        btnMenu = findViewById(R.id.btn_points_menu)
 
-        val puntos = mutableListOf<Puntos>(
-            Puntos(9999, "2020-12-21")
-        )
+        db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "game_v3.db"
+        ).allowMainThreadQueries().build()
 
-        rv.adapter = PuntosAdapter(puntos)
+        val instanceScoreDb = db.scoreDAO()
+        val arrayPoints = instanceScoreDb.getAscFirst()
+
+
+        rv.adapter = PuntosAdapter(arrayPoints)
         rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
+        btnMenu.setOnClickListener { _ ->
+            var intent = Intent(this , MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

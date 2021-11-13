@@ -16,6 +16,9 @@ interface PuntuacionDAO {
     @Query("SELECT * FROM score ORDER BY score ASC")
     fun getAsc() : List<Puntuacion>
 
+    @Query("SELECT * FROM score ORDER BY score DESC, hints ASC LIMIT 5")
+    fun getAscFirst() : List<Puntuacion>
+
     @Update
     fun update(score: Puntuacion)
 

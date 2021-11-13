@@ -333,10 +333,16 @@ class MainActivity : AppCompatActivity() {
                 builder.setPositiveButton("No") { dialogInterface: DialogInterface, i: Int ->
                     currentGame.deleteSpecific("general")
                     val intent = Intent(this, juego::class.java)
-                    QuestionList.shuffle()
+                    val questionStringNew = existingOptions[0].categories.split("|")
                     val gson = Gson()
-                    val QuestionString = gson.toJson(QuestionList)
-                    val ObstionString = gson.toJson(optionObj)
+                    val questionListNew = mutableListOf<Question>()
+                    for (e in questionStringNew) {
+                        questionListNew.add(gson.fromJson(e, Question::class.java))
+
+                    }
+                    val QuestionString = gson.toJson(questionListNew)
+                    val newestOptions = Options(existingOptions[0].difficulty, existingOptions[0].numQuestions, existingOptions[0].clues)
+                    val ObstionString = gson.toJson(newestOptions)
                     intent.putExtra("Preguntas", QuestionString)
                     intent.putExtra("options", ObstionString)
                     startActivity(intent)
