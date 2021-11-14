@@ -152,28 +152,6 @@ class juego : AppCompatActivity()  {
 
         val scoreMenu = gameModel.getScore()
 
-        if (scoreMenu != null) {
-            Log.d("HOLA", scoreMenu.toString())
-            txtRight.text = "${resources.getString(R.string.right)} ${scoreMenu[0]}"
-            txtWrong.text = "${resources.getString(R.string.wrong)} ${scoreMenu[1]}"
-            txtCluesScore.text = "${resources.getString(R.string.clue)} ${scoreMenu[2]}"
-            txtTotal.text = "${resources.getString(R.string.score)} ${scoreMenu[3]}"
-            if (scoreMenu[0] > (optionsToSend.numberOfQuestions / 2) ) {
-                scoreImage.setImageResource(R.drawable.star_eyes)
-            } else {
-                scoreImage.setImageResource(R.drawable.clown)
-            }
-            buildScore.create()
-            buildScore.show()
-
-            val currentDay = "${Calendar.getInstance().get(Calendar.YEAR)}-${Calendar.getInstance().get(Calendar.MONTH) + 1}-${Calendar.getInstance().get(Calendar.DAY_OF_MONTH)}"
-            scoreSetter.insert(Puntuacion(scoreSetter.getAll().size, currentDay, scoreMenu[3], scoreMenu[2], "general"))
-            currentGame.deleteSpecific("general")
-            // Toast.makeText(this, score.toString(), Toast.LENGTH_LONG).show()
-        }
-
-
-
         btnNext.setOnClickListener { _ ->
             if (!optionsToSend.hint) {
                 pistas = 0
