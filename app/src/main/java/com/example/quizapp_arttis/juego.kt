@@ -150,7 +150,8 @@ class juego : AppCompatActivity()  {
         scoreImage = dialogView.findViewById(R.id.score_image)
         buildScore.setView(dialogView)
 
-        val scoreMenu = gameModel.getScore()
+
+
 
         btnNext.setOnClickListener { _ ->
             if (!optionsToSend.hint) {
