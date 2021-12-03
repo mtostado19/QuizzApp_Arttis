@@ -18,8 +18,8 @@ import com.example.room_demo_application.db.Puntuacion
 import org.w3c.dom.Text
 import java.util.*
 
-class PuntosAdapter(val puntos: List<Puntuacion>) :
-    RecyclerView.Adapter<PuntosAdapter.ViewHolder>() {
+class PuntosAdapter2(val puntos: List<Puntuacion>) :
+    RecyclerView.Adapter<PuntosAdapter2.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var txtPuntuacion: TextView
@@ -59,21 +59,20 @@ class PuntosAdapter(val puntos: List<Puntuacion>) :
 }
 
 
-class PointsActivity : AppCompatActivity(){
+class PointsActivityGlobal : AppCompatActivity(){
 
     private lateinit var rv: RecyclerView
     private lateinit var db : AppDatabase
     private lateinit var btnMenu : Button
-    private lateinit var btnGlobal : Button
+    private lateinit var btnLocal : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_puntacion)
+        setContentView(R.layout.activity_puntuacionglobal)
 
         rv = findViewById(R.id.rvPuntuacion)
         rv.layoutManager = LinearLayoutManager(this)
         btnMenu = findViewById(R.id.btn_points_menu)
-        btnGlobal = findViewById(R.id.btn_points_global)
 
         db = Room.databaseBuilder(
             applicationContext,
@@ -85,7 +84,7 @@ class PointsActivity : AppCompatActivity(){
         val arrayPoints = instanceScoreDb.getAscFirst()
 
 
-        rv.adapter = PuntosAdapter(arrayPoints)
+        rv.adapter = PuntosAdapter2(arrayPoints)
         rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         btnMenu.setOnClickListener { _ ->
@@ -93,8 +92,8 @@ class PointsActivity : AppCompatActivity(){
             startActivity(intent)
         }
 
-        btnGlobal.setOnClickListener { _ ->
-            var intent = Intent(this, PointsActivityGlobal::class.java)
+        btnLocal.setOnClickListener { _ ->
+            var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }

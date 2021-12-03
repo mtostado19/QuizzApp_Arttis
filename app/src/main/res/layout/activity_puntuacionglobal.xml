@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/btn_points_menu"
+            android:id="@+id/btn_points_menu2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Menu"
@@ -21,10 +21,10 @@
             android:textSize="30dp"/>
 
         <Button
-            android:id="@+id/btn_points_global"
+            android:id="@+id/btn_points_local"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GlOBAL"
+            android:text="Local"
             android:layout_marginLeft="115dp"
             android:layout_marginTop="10dp"
             android:textSize="25dp"/>
@@ -42,7 +42,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="30dp"
-            android:text="¡Mejores Puntuaciones!"/>
+            android:text="¡Mejores Puntuaciones Globales!"
+            android:textAlignment="center"/>
 
     </LinearLayout>
 

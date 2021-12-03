@@ -40,4 +40,8 @@
     <string name="confirmResponse">Si</string>
     <string name="RejectRespone">No</string>
     <string name="errorMesageOptions">Error, opciones no validas</string>
+    <string name="usuarioPuntos">Usuario:</string>
+    <string name="puntosPuntos">Puntos:</string>
+    <string name="fechaPuntos">Fecha:</string>
+    <string name="hintsPuntos">Pistas:</string>
 </resources>

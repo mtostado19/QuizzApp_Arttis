@@ -46,41 +46,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/id_pointsTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Puntos:"
-                    android:textSize="25dp"
-                    android:textColor="@color/white"
-                    android:layout_marginRight="85dp"
-                    android:textAlignment="center"/>
-
-                <TextView
-                    android:id="@+id/id_dateTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Date:"
-                    android:textSize="25dp"
-                    android:textColor="@color/white"
-                    android:layout_marginRight="85dp"
-                    android:textAlignment="center"/>
-
-                <TextView
-                    android:id="@+id/id_hintsTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hints"
-                    android:textSize="25dp"
-                    android:textColor="@color/white"/>
-
-
-            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPuntuacion"

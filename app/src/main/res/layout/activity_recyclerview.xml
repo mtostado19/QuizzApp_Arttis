@@ -9,42 +9,125 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/id_points"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Puntos:"
-            android:textSize="25dp"
-            android:textColor="@color/white"
-            android:layout_marginRight="70dp"
-            android:textAlignment="center"
-            android:padding="10dp"/>
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/id_date"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/usuarioPuntos"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:layout_marginRight="70dp"
+                android:textAlignment="center"
+                />
+
+            <TextView
+                android:id="@+id/id_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usuario:"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:layout_marginRight="70dp"
+                android:textAlignment="center"
+                android:padding="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date:"
-            android:textSize="25dp"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:layout_marginRight="70dp"
-            android:padding="10dp"/>
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/id_hints"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/puntosPuntos"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:layout_marginRight="70dp"
+                android:textAlignment="center"
+                />
+
+            <TextView
+                android:id="@+id/id_points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Puntos:"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:layout_marginRight="70dp"
+                android:textAlignment="center"
+                android:padding="10dp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hints:"
-            android:textSize="25dp"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:padding="10dp"/>
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fechaPuntos"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:layout_marginRight="70dp"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/id_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date:"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:layout_marginRight="70dp"
+                android:padding="10dp"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hintsPuntos"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:layout_marginRight="70dp"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/id_hints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hints:"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:padding="10dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="360dp"
+            android:layout_height="5dp"
+            android:background="@color/white">
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
 </LinearLayout>
