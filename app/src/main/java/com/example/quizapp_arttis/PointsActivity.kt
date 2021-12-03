@@ -2,7 +2,6 @@ package com.example.quizapp_arttis
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.room_demo_application.db.AppDatabase
-import com.example.room_demo_application.db.Puntuacion
-import org.w3c.dom.Text
+import com.example.quizapp_arttis.db.Puntuacion
 import java.util.*
 
 class PuntosAdapter(val puntos: List<Puntuacion>) :
@@ -78,7 +76,7 @@ class PointsActivity : AppCompatActivity(){
         db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "game_v3.db"
+            "game_v4.db"
         ).allowMainThreadQueries().build()
 
         val instanceScoreDb = db.scoreDAO()

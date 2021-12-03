@@ -9,9 +9,7 @@ import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.room.Room
 import com.example.room_demo_application.db.AppDatabase
-import com.example.room_demo_application.db.JuegoActual
 import com.example.room_demo_application.db.Opciones
-import com.example.room_demo_application.db.Puntuacion
 import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
@@ -35,8 +33,10 @@ class MainActivity : AppCompatActivity() {
         db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "game_v3.db"
+            "game_v4.db"
         ).allowMainThreadQueries().build()
+
+        db.usuarioDAO()
 
         val currentGame = db.currenGameDAO()
         val optionsDB = db.optionsDAO()
