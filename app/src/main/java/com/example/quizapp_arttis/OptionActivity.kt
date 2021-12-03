@@ -50,7 +50,7 @@ class OptionActivity : AppCompatActivity() {
         db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "game_v3.db"
+            "game_v4.db"
         ).allowMainThreadQueries().build()
 
         val optionsDB = db.optionsDAO()

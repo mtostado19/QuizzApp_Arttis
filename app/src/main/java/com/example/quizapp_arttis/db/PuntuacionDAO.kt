@@ -1,6 +1,7 @@
 package com.example.room_demo_application.db
 
 import androidx.room.*
+import com.example.quizapp_arttis.db.Puntuacion
 
 @Dao
 interface PuntuacionDAO {
@@ -18,6 +19,7 @@ interface PuntuacionDAO {
 
     @Query("SELECT * FROM score ORDER BY score DESC, hints ASC LIMIT 5")
     fun getAscFirst() : List<Puntuacion>
+
 
     @Update
     fun update(score: Puntuacion)

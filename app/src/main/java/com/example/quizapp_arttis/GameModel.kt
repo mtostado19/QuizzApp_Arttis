@@ -1,10 +1,7 @@
 package com.example.quizapp_arttis
 
-import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.parcelize.Parcelize
 
 
 class GameModel(val questions: MutableList<Question>, val options: Options ) : ViewModel() {

@@ -1,4 +1,4 @@
-package com.example.room_demo_application.db
+package com.example.quizapp_arttis.db
 
 import androidx.room.*
 

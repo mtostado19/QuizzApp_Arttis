@@ -5,13 +5,12 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.room.Room
 import com.example.room_demo_application.db.AppDatabase
 import com.example.room_demo_application.db.JuegoActual
-import com.example.room_demo_application.db.Puntuacion
+import com.example.quizapp_arttis.db.Puntuacion
 import com.google.gson.Gson
 import java.util.*
 import kotlin.collections.ArrayList
@@ -43,7 +42,7 @@ class juego : AppCompatActivity()  {
         db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "game_v3.db"
+            "game_v4.db"
         ).allowMainThreadQueries().build()
 
         var gson = Gson()
