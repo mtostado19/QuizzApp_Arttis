@@ -44,4 +44,13 @@
     <string name="puntosPuntos">Puntos:</string>
     <string name="fechaPuntos">Fecha:</string>
     <string name="hintsPuntos">Pistas:</string>
+    <string name="select">Seleccionar</string>
+    <string name="edit">Actualizar</string>
+    <string name="delete">Borrar</string>
+    <string name="addNewUser">Añadir Usuario</string>
+    <string name="addNewUserQuestion">Un usuario ha sido seleccionado, deseas crear uno nuevo?</string>
+    <string name="noUserSelected">No hay un usuario seleccionado</string>
+    <string name="noEmptyNames">Favor de insetar un nombre</string>
+    <string name="activeUser">Usuario activo</string>
+    <string name="noRepeatedNames">Este nombre ya ha sido usado</string>
 </resources>

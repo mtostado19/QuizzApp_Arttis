@@ -23,6 +23,9 @@ interface UsuarioDAO {
     @Delete
     fun delete(user: Usuario)
 
-    @Query("DELETE FROM users WHERE name = :id")
+    @Query("DELETE FROM users WHERE id = :id")
     fun deleteSpecific(id: String)
+
+    @Query("SELECT * FROM users ORDER BY id desc limit 1")
+    fun getMaxId() : List<Usuario>
 }

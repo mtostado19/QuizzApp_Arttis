@@ -219,32 +219,32 @@ class juego : AppCompatActivity()  {
         }
 
          lvAnswers.setOnItemClickListener { parent, view, position, id ->
-             Log.d("QUE ES:", lvData[position])
-             val result = gameModel.checkAnswer(lvData[position])
-             val stringColor = if(result) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
-             lvAnswers.getChildAt(position).setBackgroundColor(stringColor)
-             lvAnswers.setEnabled(false)
-             val score = gameModel.getScore()
+                 Log.d("QUE ES:", lvData[position])
+                 val result = gameModel.checkAnswer(lvData[position])
+                 val stringColor = if(result) Color.parseColor("#05ff15") else Color.parseColor("#ff0000")
+                 lvAnswers.getChildAt(position).setBackgroundColor(stringColor)
+                 lvAnswers.setEnabled(false)
+                 val score = gameModel.getScore()
 
-             if (score != null) {
-                 Log.d("HOLA", score.toString())
-                 txtRight.text = "${resources.getString(R.string.right)} ${score[0]}"
-                 txtWrong.text = "${resources.getString(R.string.wrong)} ${score[1]}"
-                 txtCluesScore.text = "${resources.getString(R.string.clue)} ${score[2]}"
-                 txtTotal.text = "${resources.getString(R.string.score)} ${score[3]}"
-                 if (score[0] > (optionsToSend.numberOfQuestions / 2) ) {
-                     scoreImage.setImageResource(R.drawable.star_eyes)
-                 } else {
-                     scoreImage.setImageResource(R.drawable.clown)
+                 if (score != null) {
+                     Log.d("HOLA", score.toString())
+                     txtRight.text = "${resources.getString(R.string.right)} ${score[0]}"
+                     txtWrong.text = "${resources.getString(R.string.wrong)} ${score[1]}"
+                     txtCluesScore.text = "${resources.getString(R.string.clue)} ${score[2]}"
+                     txtTotal.text = "${resources.getString(R.string.score)} ${score[3]}"
+                     if (score[0] > (optionsToSend.numberOfQuestions / 2) ) {
+                         scoreImage.setImageResource(R.drawable.star_eyes)
+                     } else {
+                         scoreImage.setImageResource(R.drawable.clown)
+                     }
+                     buildScore.create()
+                     buildScore.show()
+
+                     val currentDay = "${Calendar.getInstance().get(Calendar.YEAR)}-${Calendar.getInstance().get(Calendar.MONTH) + 1}-${Calendar.getInstance().get(Calendar.DAY_OF_MONTH)}"
+                     scoreSetter.insert(Puntuacion(scoreSetter.getAll().size, currentDay, score[3], score[2], "general"))
+                     currentGame.deleteSpecific("general")
+                     // Toast.makeText(this, score.toString(), Toast.LENGTH_LONG).show()
                  }
-                 buildScore.create()
-                 buildScore.show()
-
-                 val currentDay = "${Calendar.getInstance().get(Calendar.YEAR)}-${Calendar.getInstance().get(Calendar.MONTH) + 1}-${Calendar.getInstance().get(Calendar.DAY_OF_MONTH)}"
-                 scoreSetter.insert(Puntuacion(scoreSetter.getAll().size, currentDay, score[3], score[2], "general"))
-                 currentGame.deleteSpecific("general")
-                 // Toast.makeText(this, score.toString(), Toast.LENGTH_LONG).show()
-             }
 
         }
 
@@ -334,7 +334,6 @@ class juego : AppCompatActivity()  {
 
         builder.create().show()
     }
-
 
 }
 

@@ -44,4 +44,13 @@
   <string name="puntosPuntos">Points:</string>
   <string name="fechaPuntos">Date:</string>
   <string name="hintsPuntos">Hints:</string>
+  <string name="select">Select</string>
+  <string name="edit">Update</string>
+  <string name="delete">Delete</string>
+  <string name="addNewUser">Add User</string>
+  <string name="addNewUserQuestion">A user has been selected, would you like to create a new one?</string>
+  <string name="noUserSelected">No user selected</string>
+  <string name="noEmptyNames">First, write a name</string>
+  <string name="activeUser">Usuario activo</string>
+  <string name="noRepeatedNames">This name is already in use</string>
 </resources>

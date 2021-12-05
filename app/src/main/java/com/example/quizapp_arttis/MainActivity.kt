@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.room.Room
 import com.example.room_demo_application.db.AppDatabase
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnPlay: Button
     private lateinit var btnOption: Button
     private lateinit var btnPuntacion: Button
+    private lateinit var btnUser: ImageButton
     var NumPreguntas = 6
     var dificultad = 1
     var pistas = false
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         btnPlay = findViewById(R.id.play_button)
         btnOption = findViewById(R.id.btn_option)
         btnPuntacion = findViewById(R.id.btn_puntuacion)
+        btnUser = findViewById(R.id.user_button)
 
         db = Room.databaseBuilder(
             applicationContext,
@@ -370,6 +373,11 @@ class MainActivity : AppCompatActivity() {
 
         btnPuntacion.setOnClickListener { _ ->
             val intent = Intent(this, PointsActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnUser.setOnClickListener { _ ->
+            val intent = Intent(this, activity_user::class.java)
             startActivity(intent)
         }
 
