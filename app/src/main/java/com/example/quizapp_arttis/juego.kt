@@ -311,9 +311,13 @@ class juego : AppCompatActivity()  {
         val currentUser = userManager.getActiveUser("yes")
         val currentUserName = currentUser[0].name
         val currentGame = db.currenGameDAO()
+        var id = currentGame.getMaxId()
+        var maxId = 0
+        if (id.isNotEmpty()) {
+            maxId = id[0].id + 1
+        }
         if (currentGame.getSpecific(currentUserName).isEmpty()) {
-            val gameLength = currentGame.getAll().size
-            currentGame.insert(JuegoActual(gameLength, gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), currentUserName))
+            currentGame.insert(JuegoActual(maxId, gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), currentUserName))
         } else {
             val gameOcurring = currentGame.getSpecific(currentUserName)[0]
             currentGame.update(JuegoActual(gameOcurring.id,gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), currentUserName) )
@@ -330,9 +334,13 @@ class juego : AppCompatActivity()  {
         builder.setMessage(resources.getString(R.string.extiGameQuestion))
         builder.setNegativeButton(resources.getString(R.string.confirmResponse)) { dialogInterface: DialogInterface, i: Int ->
             val currentGame = db.currenGameDAO()
+            var id = currentGame.getMaxId()
+            var maxId = 0
+            if (id.isNotEmpty()) {
+                maxId = id[0].id + 1
+            }
             if (currentGame.getSpecific(currentUserName).isEmpty()) {
-                val gameLength = currentGame.getAll().size
-                currentGame.insert(JuegoActual(gameLength, gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), currentUserName))
+                currentGame.insert(JuegoActual(maxId, gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), currentUserName))
             } else {
                 val gameOcurring = currentGame.getSpecific(currentUserName)[0]
                 currentGame.update(JuegoActual(gameOcurring.id,gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), currentUserName) )
