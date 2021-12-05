@@ -45,4 +45,7 @@ interface PuntuacionDAO {
 
     @Query("SELECT * FROM score ORDER BY id desc limit 1")
     fun getMaxId() : List<Puntuacion>
+
+    @Query("DELETE FROM score WHERE user = :id")
+    fun deleteAll(id: String)
 }

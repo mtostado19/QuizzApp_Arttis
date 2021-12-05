@@ -153,6 +153,9 @@ class activity_user : AppCompatActivity() {
                     tvActiveUser.text = "${resources.getString(R.string.activeUser)}: ${defaultUser.name}"
                 }
                 userManager.deleteSpecific(selectedUser.id.toString())
+                db.scoreDAO().deleteAll(selectedUser.name)
+                db.optionsDAO().deleteAll(selectedUser.name)
+                db.currenGameDAO().deleteAll(selectedUser.name)
                 allUsers = userManager.getAll();
                 var arrayListUsersUpdated = allUsers.map { it.name }
 

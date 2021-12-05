@@ -27,5 +27,8 @@ interface OpcionesDAO {
     fun getMaxId() : List<Opciones>
 
     @Query("DELETE FROM options WHERE user != :id")
+    fun deleteAllNotEqual(id: String)
+
+    @Query("DELETE FROM options WHERE user = :id")
     fun deleteAll(id: String)
 }
