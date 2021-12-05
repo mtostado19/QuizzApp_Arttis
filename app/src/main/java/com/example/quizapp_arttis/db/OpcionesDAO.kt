@@ -1,6 +1,7 @@
 package com.example.room_demo_application.db
 
 import androidx.room.*
+import com.example.quizapp_arttis.db.Puntuacion
 
 @Dao
 interface OpcionesDAO {
@@ -21,4 +22,10 @@ interface OpcionesDAO {
 
     @Query("DELETE FROM options WHERE user = :id")
     fun deleteSpecific(id: String)
+
+    @Query("SELECT * FROM options ORDER BY id desc limit 1")
+    fun getMaxId() : List<Opciones>
+
+    @Query("DELETE FROM options WHERE user != :id")
+    fun deleteAll(id: String)
 }

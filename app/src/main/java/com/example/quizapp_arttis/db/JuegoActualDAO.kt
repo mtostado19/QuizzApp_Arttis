@@ -21,4 +21,7 @@ interface JuegoActualDAO {
 
     @Query("DELETE FROM activeGames WHERE user = :id")
     fun deleteSpecific(id: String)
+
+    @Query("SELECT * FROM activeGames ORDER BY id desc limit 1")
+    fun getMaxId() : List<JuegoActual>
 }

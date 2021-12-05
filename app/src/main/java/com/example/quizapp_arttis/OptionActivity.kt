@@ -54,6 +54,14 @@ class OptionActivity : AppCompatActivity() {
         ).allowMainThreadQueries().build()
 
         val optionsDB = db.optionsDAO()
+        val userManager = db.usuarioDAO()
+        val currentUser = userManager.getActiveUser("yes")
+        val currentUserName = currentUser[0].name
+//        optionsDB.deleteAll("none")
+
+        println("-------OPTIONS")
+        println(optionsDB.getSpecific(currentUserName).size)
+        println("-------OPTIONS END")
 
 
         var QuestionGeografia = resources.getString(R.string.psGeografía)
@@ -71,7 +79,7 @@ class OptionActivity : AppCompatActivity() {
         var pistas = false
         // Aqui termina la info que se manda a mainActivity
 
-        val optionsExist = optionsDB.getSpecific("general")
+        val optionsExist = optionsDB.getSpecific(currentUserName)
         if (!optionsExist.isEmpty()) {
             NumPreguntas = optionsExist[0].numQuestions
             Temas = optionsExist[0].categories.split("^").toCollection(ArrayList())
@@ -228,11 +236,23 @@ class OptionActivity : AppCompatActivity() {
             } else {
 
                 var intent = Intent(this , MainActivity::class.java)
-                val existingOptions = optionsDB.getSpecific("general")
+                val existingOptions = optionsDB.getSpecific(currentUserName)
+                var id = optionsDB.getMaxId()
+                var maxId = 0
+                if (id.isNotEmpty()) {
+                    maxId = id[0].id + 1
+                }
                 if (existingOptions.isEmpty()) {
-                    optionsDB.insert(Opciones(0, dificultad, NumPreguntas, ArrayList(Temas).joinToString("^"), pistas, "general"))
+                    println("Inseeeeeert")
+                    optionsDB.insert(Opciones(maxId, dificultad, NumPreguntas, ArrayList(Temas).joinToString("^"), pistas, currentUserName))
                 } else {
-                    optionsDB.update(Opciones(0, dificultad, NumPreguntas, ArrayList(Temas).joinToString("^"), pistas, "general"))
+                    existingOptions[0].difficulty = dificultad
+                    existingOptions[0].numQuestions = NumPreguntas
+                    existingOptions[0].categories = ArrayList(Temas).joinToString("^")
+                    existingOptions[0].clues = pistas
+                    existingOptions[0].user = currentUserName
+
+                    optionsDB.update(existingOptions[0])
                 }
 
                 startActivity(intent)

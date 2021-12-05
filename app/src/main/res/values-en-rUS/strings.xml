@@ -53,4 +53,5 @@
   <string name="noEmptyNames">First, write a name</string>
   <string name="activeUser">Usuario activo</string>
   <string name="noRepeatedNames">This name is already in use</string>
+  <string name="selectAUser">Please select a user to continue</string>
 </resources>

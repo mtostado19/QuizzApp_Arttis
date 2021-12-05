@@ -53,4 +53,5 @@
     <string name="noEmptyNames">Favor de insetar un nombre</string>
     <string name="activeUser">Usuario activo</string>
     <string name="noRepeatedNames">Este nombre ya ha sido usado</string>
+    <string name="selectAUser">Debe seleccionar un usuario para continuar</string>
 </resources>

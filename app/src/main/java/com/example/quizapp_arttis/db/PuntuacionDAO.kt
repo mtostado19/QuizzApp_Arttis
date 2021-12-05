@@ -2,6 +2,7 @@ package com.example.room_demo_application.db
 
 import androidx.room.*
 import com.example.quizapp_arttis.db.Puntuacion
+import com.example.quizapp_arttis.db.Usuario
 
 @Dao
 interface PuntuacionDAO {
@@ -41,4 +42,7 @@ interface PuntuacionDAO {
 
     @Query("DELETE FROM score WHERE user = :id")
     fun deleteSpecific(id: String)
+
+    @Query("SELECT * FROM score ORDER BY id desc limit 1")
+    fun getMaxId() : List<Puntuacion>
 }

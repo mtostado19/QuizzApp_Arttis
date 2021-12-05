@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.room.Room
 import com.example.room_demo_application.db.AppDatabase
@@ -39,12 +40,20 @@ class MainActivity : AppCompatActivity() {
             "game_v4.db"
         ).allowMainThreadQueries().build()
 
-        db.usuarioDAO()
+        val userManager = db.usuarioDAO()
+        val currentUser = userManager.getActiveUser("yes")
+        var currentUserName = ""
+        if (currentUser.isEmpty()) {
+            currentUserName = ""
+        } else {
+            currentUserName = currentUser[0].name
+        }
+
 
         val currentGame = db.currenGameDAO()
         val optionsDB = db.optionsDAO()
         val deleteGson = Gson()
-        val existingOptions = optionsDB.getSpecific("general")
+        val existingOptions = optionsDB.getSpecific(currentUserName)
 
 
         if (!existingOptions.isEmpty()) {
@@ -72,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             QuestionProgramación
         ).toCollection(ArrayList())
 
-        val existingOPTS = optionsDB.getSpecific("general")
+        val existingOPTS = optionsDB.getSpecific(currentUserName)
         Log.d("Optioooooons", deleteGson.toJson(existingOPTS))
         if (!existingOPTS.isEmpty()) {
             NumPreguntas = existingOPTS[0].numQuestions
@@ -319,56 +328,72 @@ class MainActivity : AppCompatActivity() {
         var optionObj = Options(dificultad, NumPreguntas, pistas)
 
         btnPlay.setOnClickListener { _ ->
-            val activeGame = currentGame.getSpecific("general")
-            if (!activeGame.isEmpty()) {
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle(resources.getString(R.string.resumeGame))
-                builder.setMessage(resources.getString(R.string.resumeGameQuestion))
-                builder.setNegativeButton(resources.getString(R.string.confirmResponse)) { dialogInterface: DialogInterface, i: Int ->
-                    val intent = Intent(this, juego::class.java)
-                    var QuestionString = activeGame[0].questions
-                    var ObstionString = activeGame[0].options
-
-                    intent.putExtra("Preguntas", QuestionString)
-                    intent.putExtra("options", ObstionString)
-                    startActivity(intent)
-                }
-                builder.setPositiveButton(resources.getString(R.string.RejectRespone)) { dialogInterface: DialogInterface, i: Int ->
-                    currentGame.deleteSpecific("general")
-                    val intent = Intent(this, juego::class.java)
-
-                    val gson = Gson()
-                    QuestionList.shuffle()
-                    val QuestionString = gson.toJson(QuestionList)
-                    val newestOptions = Options(existingOptions[0].difficulty, existingOptions[0].numQuestions, existingOptions[0].clues)
-                    val ObstionString = gson.toJson(newestOptions)
-                    intent.putExtra("Preguntas", QuestionString)
-                    intent.putExtra("options", ObstionString)
-                    startActivity(intent)
-                }
-
-                builder.create().show()
+            if (currentUserName == "") {
+                Toast.makeText(this, R.string.selectAUser, Toast.LENGTH_LONG).show()
             } else {
-                val intent = Intent(this, juego::class.java)
-                QuestionList.shuffle()
-                val gson = Gson()
-                val QuestionString = gson.toJson(QuestionList)
-                val ObstionString = gson.toJson(optionObj)
-                intent.putExtra("Preguntas", QuestionString)
-                intent.putExtra("options", ObstionString)
-                startActivity(intent)
+
+                val activeGame = currentGame.getSpecific(currentUserName)
+                if (!activeGame.isEmpty()) {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle(resources.getString(R.string.resumeGame))
+                    builder.setMessage(resources.getString(R.string.resumeGameQuestion))
+                    builder.setNegativeButton(resources.getString(R.string.confirmResponse)) { dialogInterface: DialogInterface, i: Int ->
+                        val intent = Intent(this, juego::class.java)
+                        var QuestionString = activeGame[0].questions
+                        var ObstionString = activeGame[0].options
+
+                        intent.putExtra("Preguntas", QuestionString)
+                        intent.putExtra("options", ObstionString)
+                        startActivity(intent)
+                    }
+                    builder.setPositiveButton(resources.getString(R.string.RejectRespone)) { dialogInterface: DialogInterface, i: Int ->
+                        currentGame.deleteSpecific(currentUserName)
+                        val intent = Intent(this, juego::class.java)
+
+                        val gson = Gson()
+                        QuestionList.shuffle()
+                        val QuestionString = gson.toJson(QuestionList)
+                        val newestOptions = Options(existingOptions[0].difficulty, existingOptions[0].numQuestions, existingOptions[0].clues)
+                        val ObstionString = gson.toJson(newestOptions)
+                        intent.putExtra("Preguntas", QuestionString)
+                        intent.putExtra("options", ObstionString)
+                        startActivity(intent)
+                    }
+
+                    builder.create().show()
+                } else {
+                    val intent = Intent(this, juego::class.java)
+                    QuestionList.shuffle()
+                    val gson = Gson()
+                    val QuestionString = gson.toJson(QuestionList)
+                    val ObstionString = gson.toJson(optionObj)
+                    intent.putExtra("Preguntas", QuestionString)
+                    intent.putExtra("options", ObstionString)
+                    startActivity(intent)
+                }
             }
+
         }
 
         btnOption.setOnClickListener { _ ->
-            val intent = Intent(this, OptionActivity::class.java)
-            val optExist = optionsDB.getSpecific("general")
-            if (optExist.isEmpty()) {
-                optionsDB.insert(Opciones(0, dificultad, NumPreguntas, Temas.joinToString("^"), pistas, "general"))
+            if (currentUserName == "") {
+                Toast.makeText(this, R.string.selectAUser, Toast.LENGTH_LONG).show()
             } else {
-                optionsDB.update(Opciones(0, dificultad, NumPreguntas, Temas.joinToString("^"), pistas, "general"))
+                val intent = Intent(this, OptionActivity::class.java)
+                val optExist = optionsDB.getSpecific(currentUserName)
+                var id = optionsDB.getMaxId()
+                var maxId = 0
+                if (id.isNotEmpty()) {
+                    maxId = id[0].id + 1
+                }
+                if (optExist.isEmpty()) {
+                    optionsDB.insert(Opciones(maxId, dificultad, NumPreguntas, Temas.joinToString("^"), pistas, currentUserName))
+                } else {
+                    optionsDB.update(Opciones(optExist[0].id, dificultad, NumPreguntas, Temas.joinToString("^"), pistas, currentUserName))
+                }
+                startActivity(intent)
             }
-            startActivity(intent)
+
         }
 
         btnPuntacion.setOnClickListener { _ ->
@@ -386,11 +411,30 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val optionsDB = db.optionsDAO()
-        val existingOptions = optionsDB.getSpecific("general")
-        if (existingOptions.isEmpty()) {
-            optionsDB.insert(Opciones(0, dificultad, NumPreguntas, Temas.joinToString("^"), pistas, "general"))
+        val userManager = db.usuarioDAO()
+        val currentUser = userManager.getActiveUser("yes")
+        var currentUserName = ""
+        if (currentUser.isEmpty()) {
+            currentUserName = ""
         } else {
-            optionsDB.update(Opciones(0, dificultad, NumPreguntas, Temas.joinToString("^"), pistas, "general"))
+            var id = optionsDB.getMaxId()
+            var maxId = 0
+            if (id.isNotEmpty()) {
+                maxId = id[0].id + 1
+            }
+            currentUserName = currentUser[0].name
+            val existingOptions = optionsDB.getSpecific(currentUserName)
+            if (existingOptions.isEmpty()) {
+                optionsDB.insert(Opciones(maxId, dificultad, NumPreguntas, Temas.joinToString("^"), pistas, currentUserName))
+            } else {
+                existingOptions[0].difficulty = dificultad
+                existingOptions[0].numQuestions = NumPreguntas
+                existingOptions[0].categories = Temas.joinToString("^")
+                existingOptions[0].clues = pistas
+                existingOptions[0].user = currentUserName
+
+                optionsDB.update(existingOptions[0])
+            }
         }
     }
 

@@ -44,11 +44,14 @@ class juego : AppCompatActivity()  {
             AppDatabase::class.java,
             "game_v4.db"
         ).allowMainThreadQueries().build()
+        val userManager = db.usuarioDAO()
+        val currentUser = userManager.getActiveUser("yes")
+        val currentUserName = currentUser[0].name
 
         var gson = Gson()
         val currentGame = db.currenGameDAO()
         val scoreSetter = db.scoreDAO()
-        val currentGameValues = currentGame.getSpecific("general")
+        val currentGameValues = currentGame.getSpecific(currentUserName)
         if (!currentGameValues.isEmpty()) {
             questionString = currentGameValues[0].questions
             optionsString = currentGameValues[0].options
@@ -241,8 +244,8 @@ class juego : AppCompatActivity()  {
                      buildScore.show()
 
                      val currentDay = "${Calendar.getInstance().get(Calendar.YEAR)}-${Calendar.getInstance().get(Calendar.MONTH) + 1}-${Calendar.getInstance().get(Calendar.DAY_OF_MONTH)}"
-                     scoreSetter.insert(Puntuacion(scoreSetter.getAll().size, currentDay, score[3], score[2], "general"))
-                     currentGame.deleteSpecific("general")
+                     scoreSetter.insert(Puntuacion(scoreSetter.getAll().size, currentDay, score[3], score[2], currentUserName))
+                     currentGame.deleteSpecific(currentUserName)
                      // Toast.makeText(this, score.toString(), Toast.LENGTH_LONG).show()
                  }
 
@@ -276,8 +279,8 @@ class juego : AppCompatActivity()  {
                     buildScore.create()
                     buildScore.show()
                     val currentDay = "${Calendar.getInstance().get(Calendar.YEAR)}-${Calendar.getInstance().get(Calendar.MONTH) + 1}-${Calendar.getInstance().get(Calendar.DAY_OF_MONTH)}"
-                    scoreSetter.insert(Puntuacion(scoreSetter.getAll().size, currentDay, score[3], score[2], "general"))
-                    currentGame.deleteSpecific("general")
+                    scoreSetter.insert(Puntuacion(scoreSetter.getAll().size, currentDay, score[3], score[2], currentUserName))
+                    currentGame.deleteSpecific(currentUserName)
                     // Toast.makeText(this, score.toString(), Toast.LENGTH_LONG).show()
                 }
                 return@setOnClickListener
@@ -304,29 +307,35 @@ class juego : AppCompatActivity()  {
         super.onSaveInstanceState(outState)
         Log.d("QUIZZAPP_DEBUG", "onSaveInstanceState")
 
+        val userManager = db.usuarioDAO()
+        val currentUser = userManager.getActiveUser("yes")
+        val currentUserName = currentUser[0].name
         val currentGame = db.currenGameDAO()
-        if (currentGame.getSpecific("general").isEmpty()) {
+        if (currentGame.getSpecific(currentUserName).isEmpty()) {
             val gameLength = currentGame.getAll().size
-            currentGame.insert(JuegoActual(gameLength, gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), "general"))
+            currentGame.insert(JuegoActual(gameLength, gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), currentUserName))
         } else {
-            val gameOcurring = currentGame.getSpecific("general")[0]
-            currentGame.update(JuegoActual(gameOcurring.id,gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), "general") )
+            val gameOcurring = currentGame.getSpecific(currentUserName)[0]
+            currentGame.update(JuegoActual(gameOcurring.id,gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), currentUserName) )
         }
     }
 
     override fun onBackPressed() {
 
+        val userManager = db.usuarioDAO()
+        val currentUser = userManager.getActiveUser("yes")
+        val currentUserName = currentUser[0].name
         val builder = AlertDialog.Builder(this)
         builder.setTitle(resources.getString(R.string.exitGame))
         builder.setMessage(resources.getString(R.string.extiGameQuestion))
         builder.setNegativeButton(resources.getString(R.string.confirmResponse)) { dialogInterface: DialogInterface, i: Int ->
             val currentGame = db.currenGameDAO()
-            if (currentGame.getSpecific("general").isEmpty()) {
+            if (currentGame.getSpecific(currentUserName).isEmpty()) {
                 val gameLength = currentGame.getAll().size
-                currentGame.insert(JuegoActual(gameLength, gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), "general"))
+                currentGame.insert(JuegoActual(gameLength, gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), currentUserName))
             } else {
-                val gameOcurring = currentGame.getSpecific("general")[0]
-                currentGame.update(JuegoActual(gameOcurring.id,gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), "general") )
+                val gameOcurring = currentGame.getSpecific(currentUserName)[0]
+                currentGame.update(JuegoActual(gameOcurring.id,gameModel.getQuestionString(), gameModel.getOptionsString1(), gameModel.getValues(), currentUserName) )
             }
             finish()
         }
