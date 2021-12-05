@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -14,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.room_demo_application.db.AppDatabase
-import com.example.room_demo_application.db.Puntuacion
+import com.example.quizapp_arttis.db.Puntuacion
 import org.w3c.dom.Text
 import java.util.*
 
@@ -65,6 +66,8 @@ class PointsActivityGlobal : AppCompatActivity(){
     private lateinit var db : AppDatabase
     private lateinit var btnMenu : Button
     private lateinit var btnLocal : Button
+    private lateinit var switchFilter: Switch
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,20 +75,29 @@ class PointsActivityGlobal : AppCompatActivity(){
 
         rv = findViewById(R.id.rvPuntuacion)
         rv.layoutManager = LinearLayoutManager(this)
-        btnMenu = findViewById(R.id.btn_points_menu)
+        btnMenu = findViewById(R.id.btn_points_menu2)
+        btnLocal = findViewById(R.id.btn_points_local)
+        switchFilter = findViewById(R.id.switch1)
 
         db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "game_v3.db"
+            "game_v4.db"
         ).allowMainThreadQueries().build()
 
         val instanceScoreDb = db.scoreDAO()
-        val arrayPoints = instanceScoreDb.getAscFirst()
+        var arrayPoints = instanceScoreDb.getAscNumPlaying()
 
 
         rv.adapter = PuntosAdapter2(arrayPoints)
         rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
+        switchFilter?.setOnCheckedChangeListener({ _ , isChecked ->
+            arrayPoints = if (isChecked) instanceScoreDb.getAscDate() else instanceScoreDb.getAscNumPlaying()
+            rv.adapter = PuntosAdapter(arrayPoints)
+            rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        })
+
 
         btnMenu.setOnClickListener { _ ->
             var intent = Intent(this , MainActivity::class.java)
@@ -93,7 +105,7 @@ class PointsActivityGlobal : AppCompatActivity(){
         }
 
         btnLocal.setOnClickListener { _ ->
-            var intent = Intent(this, MainActivity::class.java)
+            var intent = Intent(this, PointsActivity::class.java)
             startActivity(intent)
         }
     }

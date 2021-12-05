@@ -13,6 +13,9 @@
             android:name=".PointsActivity"
             android:exported="true" />
         <activity
+            android:name=".PointsActivityGlobal"
+            android:exported="true" />
+        <activity
             android:name=".OptionActivity"
             android:exported="true" />
         <activity

@@ -20,6 +20,15 @@ interface PuntuacionDAO {
     @Query("SELECT * FROM score ORDER BY score DESC, hints ASC LIMIT 5")
     fun getAscFirst() : List<Puntuacion>
 
+    @Query("SELECT * FROM score ORDER BY date DESC, hints ASC LIMIT 5")
+    fun getAscDate() : List<Puntuacion>
+
+    @Query("SELECT id, date, SUM(score) as score , hints, user FROM score GROUP BY user ")
+    fun getAscNumPlaying() : List<Puntuacion>
+
+    @Query("SELECT id, date, SUM(score) as score , hints, user FROM score GROUP BY user ") //! Pa mañana
+    fun getAscMatchesPlayed() : List<Puntuacion>
+
 
     @Update
     fun update(score: Puntuacion)

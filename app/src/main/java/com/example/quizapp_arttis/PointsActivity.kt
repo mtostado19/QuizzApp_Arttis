@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -63,6 +64,7 @@ class PointsActivity : AppCompatActivity(){
     private lateinit var db : AppDatabase
     private lateinit var btnMenu : Button
     private lateinit var btnGlobal : Button
+    private lateinit var switchFilter: Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +74,7 @@ class PointsActivity : AppCompatActivity(){
         rv.layoutManager = LinearLayoutManager(this)
         btnMenu = findViewById(R.id.btn_points_menu)
         btnGlobal = findViewById(R.id.btn_points_global)
+        switchFilter = findViewById(R.id.switchyea)
 
         db = Room.databaseBuilder(
             applicationContext,
@@ -80,11 +83,17 @@ class PointsActivity : AppCompatActivity(){
         ).allowMainThreadQueries().build()
 
         val instanceScoreDb = db.scoreDAO()
-        val arrayPoints = instanceScoreDb.getAscFirst()
+        var arrayPoints = instanceScoreDb.getAscFirst()
 
 
         rv.adapter = PuntosAdapter(arrayPoints)
         rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
+        switchFilter?.setOnCheckedChangeListener({ _ , isChecked ->
+            arrayPoints = if (isChecked) instanceScoreDb.getAscDate() else instanceScoreDb.getAscFirst()
+            rv.adapter = PuntosAdapter(arrayPoints)
+            rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        })
 
         btnMenu.setOnClickListener { _ ->
             var intent = Intent(this , MainActivity::class.java)
