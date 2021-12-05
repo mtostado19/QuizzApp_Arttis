@@ -397,8 +397,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnPuntacion.setOnClickListener { _ ->
-            val intent = Intent(this, PointsActivity::class.java)
-            startActivity(intent)
+            if (currentUserName == "") {
+                Toast.makeText(this, R.string.selectAUser, Toast.LENGTH_LONG).show()
+            } else {
+                val intent = Intent(this, PointsActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         btnUser.setOnClickListener { _ ->
