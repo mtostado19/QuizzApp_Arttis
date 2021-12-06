@@ -58,4 +58,9 @@
   <string name="puntajePerfil">Points</string>
   <string name="sin_pistas">Without Hints</string>
   <string name="partidas">Matches</string>
+  <string name="puntuaciones_fechas">By score / By date</string>
+  <string name="mejores_puntuaciones">Highest Scores!</string>
+  <string name="puntuaciones_num_jugadas">By score / By matches played</string>
+  <string name="mejores_puntuaciones_globales">¡Highest Global Scores!</string>
+  <string name="tu_mejores_puntuaciones">¡Your Highest Scores!</string>
 </resources>

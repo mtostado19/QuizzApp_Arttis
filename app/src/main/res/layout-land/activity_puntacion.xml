@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:text="Puntuaciones / Fechas" />
+                android:text="@string/puntuaciones_fechas" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="30dp"
-                    android:text="¡Mejores Puntuaciones!"/>
+                    android:text="@string/mejores_puntuaciones"/>
 
             </LinearLayout>
 

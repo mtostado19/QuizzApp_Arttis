@@ -93,7 +93,6 @@ class PointsActivity : AppCompatActivity(){
             arrayPoints =
                 if (isChecked) instanceScoreDb.getAscDate() else instanceScoreDb.getAscFirst()
             rv.adapter = PuntosAdapter(arrayPoints)
-            rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         }
 
         btnMenu.setOnClickListener { _ ->

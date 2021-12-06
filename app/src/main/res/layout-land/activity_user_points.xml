@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="30dp"
-                    android:text="¡Puntuaciones del Usuario!"/>
+                    android:text="@string/tu_mejores_puntuaciones"/>
 
             </LinearLayout>
 

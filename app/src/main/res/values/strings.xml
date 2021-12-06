@@ -58,4 +58,9 @@
     <string name="puntajePerfil">Puntaje</string>
     <string name="sin_pistas">Sin pistas</string>
     <string name="partidas">Partidas</string>
+    <string name="puntuaciones_fechas">Puntuaciones / Fechas</string>
+    <string name="mejores_puntuaciones">¡Mejores Puntuaciones!</string>
+    <string name="puntuaciones_num_jugadas">Puntuaciones / Numero de partidas jugadas</string>
+    <string name="mejores_puntuaciones_globales">¡Mejores Puntuaciones Globales!</string>
+    <string name="tu_mejores_puntuaciones">¡Mejores Puntuaciones!</string>
 </resources>

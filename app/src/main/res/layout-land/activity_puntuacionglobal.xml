@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:text="Puntuaciones / Numero de partidas jugadas" />
+        android:text="@string/puntuaciones_num_jugadas" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="30dp"
-            android:text="¡Mejores Puntuaciones Globales!"
+            android:text="@string/mejores_puntuaciones_globales"
             android:textAlignment="center"/>
 
     </LinearLayout>
