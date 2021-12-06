@@ -27,7 +27,8 @@
             android:layout_marginLeft="70dp"
             android:layout_width="200dp"
             android:layout_height="60dp"
-            android:textColor="@color/white">
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white">
 
         </EditText>
 
