@@ -24,10 +24,10 @@ interface PuntuacionDAO {
     @Query("SELECT * FROM score ORDER BY date DESC, hints ASC LIMIT 5")
     fun getAscDate() : List<Puntuacion>
 
-    @Query("SELECT id, date, SUM(score) as score, hints, user FROM score GROUP BY user")
+    @Query("SELECT id, COUNT(user) as date, SUM(score) as score, hints, user FROM score GROUP BY user ORDER BY score DESC")
     fun getAscNumPlaying() : List<Puntuacion>
 
-    @Query("SELECT id, date, SUM(score) as score, hints, user FROM score GROUP BY user") // Reparar
+    @Query("SELECT id, COUNT(user) as date, SUM(score) as score, hints, user FROM score GROUP BY user ORDER BY date DESC")
     fun getAscMatchesPlayed() : List<Puntuacion>
 
     @Query("SELECT * FROM score WHERE user = :user ORDER BY date DESC")

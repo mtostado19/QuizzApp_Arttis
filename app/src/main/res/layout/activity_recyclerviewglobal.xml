@@ -74,17 +74,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fechaPuntos"
+                android:text="@string/partidas"
                 android:textSize="25dp"
                 android:textColor="@color/white"
                 android:layout_marginRight="70dp"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/id_date_global"
+                android:id="@+id/id_partidas_global"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date:"
+                android:text="Partida:"
                 android:textSize="25dp"
                 android:textColor="@color/white"
                 android:textAlignment="center"
@@ -117,33 +117,6 @@
                 android:textColor="@color/white"
                 android:textAlignment="center"
                 android:padding="10dp"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/partidasPuntos"
-                android:textSize="25dp"
-                android:textColor="@color/white"
-                android:layout_marginRight="70dp"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/id_partidas_global"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Partidas:"
-                android:textSize="25dp"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:padding="10dp"/>
-
 
         </LinearLayout>
 

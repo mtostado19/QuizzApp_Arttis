@@ -24,7 +24,6 @@ class PuntosAdapter2(val puntos: List<Puntuacion>) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var txtPuntuacion: TextView
-        private var txtFecha: TextView
         private var txtHints : TextView
         private var txtUsuario : TextView
         private var txtPartidas : TextView
@@ -33,7 +32,6 @@ class PuntosAdapter2(val puntos: List<Puntuacion>) :
 
         init {
             txtPuntuacion = view.findViewById(R.id.id_points_global)
-            txtFecha = view.findViewById(R.id.id_date_global)
             txtHints = view.findViewById(R.id.id_hints_global)
             txtUsuario = view.findViewById(R.id.id_user_global)
             txtPartidas = view.findViewById(R.id.id_partidas_global)
@@ -42,9 +40,9 @@ class PuntosAdapter2(val puntos: List<Puntuacion>) :
         }
         fun bind(points: Puntuacion) {
             txtPuntuacion.text = points.score.toString()
-            txtFecha.text = points.date
+            txtPartidas.text = points.date.toString()
             txtHints.text = points.hints.toString()
-            txtPartidas.text = 3.toString()
+            txtUsuario.text = points.user
 
             this.points = points
         }
@@ -76,7 +74,7 @@ class PointsActivityGlobal : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_puntuacionglobal)
 
-        rv = findViewById(R.id.rvPuntuacion)
+        rv = findViewById(R.id.rvPuntuacion_global)
         rv.layoutManager = LinearLayoutManager(this)
         btnMenu = findViewById(R.id.btn_points_menu2)
         btnLocal = findViewById(R.id.btn_points_local)
@@ -98,9 +96,7 @@ class PointsActivityGlobal : AppCompatActivity(){
         switchFilter.setOnCheckedChangeListener { _, isChecked ->
             arrayPoints =
                 if (isChecked) instanceScoreDb.getAscMatchesPlayed() else instanceScoreDb.getAscNumPlaying()
-            println(arrayPoints)
-            rv.adapter = PuntosAdapter(arrayPoints)
-            rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+            rv.adapter = PuntosAdapter2(arrayPoints)
         }
 
 

@@ -55,7 +55,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPuntuacion"
+        android:id="@+id/rvPuntuacion_global"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
