@@ -17,8 +17,8 @@ import com.example.room_demo_application.db.AppDatabase
 import com.example.quizapp_arttis.db.Puntuacion
 import java.util.*
 
-class PuntosAdapter(val puntos: List<Puntuacion>) :
-    RecyclerView.Adapter<PuntosAdapter.ViewHolder>() {
+class PuntosAdapter3(val puntos: List<Puntuacion>) :
+    RecyclerView.Adapter<PuntosAdapter3.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var txtPuntuacion: TextView
@@ -58,23 +58,23 @@ class PuntosAdapter(val puntos: List<Puntuacion>) :
 }
 
 
-class PointsActivity : AppCompatActivity(){
+class PointsActivityUser : AppCompatActivity(){
 
     private lateinit var rv: RecyclerView
     private lateinit var db : AppDatabase
-    private lateinit var btnMenu : Button
-    private lateinit var btnGlobal : Button
-    private lateinit var switchFilter: Switch
+    private lateinit var btnFecha : Button
+    private lateinit var btnPoints : Button
+    private lateinit var switchHints: Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_puntacion)
+        setContentView(R.layout.activity_user_points)
 
-        rv = findViewById(R.id.rvPuntuacion)
+        rv = findViewById(R.id.rvPuntuacionUser)
         rv.layoutManager = LinearLayoutManager(this)
-        btnMenu = findViewById(R.id.btn_points_menu)
-        btnGlobal = findViewById(R.id.btn_points_global)
-        switchFilter = findViewById(R.id.switchyea)
+        btnFecha = findViewById(R.id.btn_fechaUser)
+        btnPoints = findViewById(R.id.btn_PuntosUser)
+        switchHints = findViewById(R.id.switch_hintsUser)
 
         db = Room.databaseBuilder(
             applicationContext,
@@ -82,28 +82,47 @@ class PointsActivity : AppCompatActivity(){
             "game_v4.db"
         ).allowMainThreadQueries().build()
 
+        val instanceUserDb = db.usuarioDAO()
+        var arrayUser = instanceUserDb.getActiveUser("yes")
+        var hintsOn = false
+        var btn_bandera = false
+
         val instanceScoreDb = db.scoreDAO()
-        var arrayPoints = instanceScoreDb.getAscFirst()
+        var arrayPoints = instanceScoreDb.getPointsUserByDate(arrayUser[0].name)
 
 
-        rv.adapter = PuntosAdapter(arrayPoints)
+        rv.adapter = PuntosAdapter3(arrayPoints)
         rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
-        switchFilter.setOnCheckedChangeListener { _, isChecked ->
-            arrayPoints =
-                if (isChecked) instanceScoreDb.getAscDate() else instanceScoreDb.getAscFirst()
-            rv.adapter = PuntosAdapter(arrayPoints)
-            rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        btnFecha.setOnClickListener { _ ->
+
+            var arrayPoints =
+                if (!hintsOn) instanceScoreDb.getPointsUserByDate(arrayUser[0].name) else instanceScoreDb.getPointsUserByDateNoHints(arrayUser[0].name)
+
+            rv.adapter = PuntosAdapter3(arrayPoints)
+            btn_bandera = false
         }
 
-        btnMenu.setOnClickListener { _ ->
-            var intent = Intent(this , MainActivity::class.java)
-            startActivity(intent)
+        btnPoints.setOnClickListener { _ ->
+            var arrayPoints =
+                if (!hintsOn) instanceScoreDb.getPointsUserByPoints(arrayUser[0].name) else instanceScoreDb.getPointsUserByPointsNoHints(arrayUser[0].name)
+
+            rv.adapter = PuntosAdapter3(arrayPoints)
+            btn_bandera = true
         }
 
-        btnGlobal.setOnClickListener { _ ->
-            var intent = Intent(this, PointsActivityGlobal::class.java)
-            startActivity(intent)
+        switchHints.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) hintsOn = true else hintsOn = false
+            if (!btn_bandera && isChecked) {
+                arrayPoints = instanceScoreDb.getPointsUserByPointsNoHints(arrayUser[0].name)
+            } else if (!btn_bandera && !isChecked) {
+                arrayPoints = instanceScoreDb.getPointsUserByDate(arrayUser[0].name)
+            } else if (btn_bandera && isChecked) {
+                arrayPoints = instanceScoreDb.getPointsUserByPointsNoHints(arrayUser[0].name)
+            }else if (btn_bandera && !isChecked) {
+                arrayPoints = instanceScoreDb.getPointsUserByPoints(arrayUser[0].name)
+            }
+            rv.adapter = PuntosAdapter3(arrayPoints)
         }
     }
 }

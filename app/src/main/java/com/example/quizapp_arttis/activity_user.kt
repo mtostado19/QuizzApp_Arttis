@@ -28,6 +28,7 @@ class activity_user : AppCompatActivity() {
     private lateinit var btnUpdate: Button
     private lateinit var btnSetActive: Button
     private lateinit var tvActiveUser: TextView
+    private lateinit var btnPerfilPoints : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +48,7 @@ class activity_user : AppCompatActivity() {
         btnUpdate = findViewById<Button>(R.id.update_button)
         btnSetActive = findViewById<Button>(R.id.select_button)
         tvActiveUser = findViewById<TextView>(R.id.active_user)
+        btnPerfilPoints = findViewById(R.id.points_button)
 
         var selectedFlag = false
 
@@ -165,6 +167,16 @@ class activity_user : AppCompatActivity() {
                 txtInput.setText("")
                 selectedFlag = false
                 btnAdd.setImageResource(R.drawable.add)
+
+            } else {
+                Toast.makeText(this, R.string.noUserSelected, Toast.LENGTH_LONG).show()
+            }
+        }
+
+        btnPerfilPoints.setOnClickListener {
+            if(selectedUser.active == "yes") {
+                var intent = Intent(this , PointsActivityUser::class.java)
+                startActivity(intent)
 
             } else {
                 Toast.makeText(this, R.string.noUserSelected, Toast.LENGTH_LONG).show()

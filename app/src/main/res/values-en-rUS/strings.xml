@@ -54,4 +54,7 @@
   <string name="activeUser">Usuario activo</string>
   <string name="noRepeatedNames">This name is already in use</string>
   <string name="selectAUser">Please select a user to continue</string>
+  <string name="partidasPuntos">Matches</string>
+  <string name="puntajePerfil">Points</string>
+  <string name="sin_pistas">Without Hints</string>
 </resources>

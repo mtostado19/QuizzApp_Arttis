@@ -20,32 +20,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/btn_points_menu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Menu"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="30dp"/>
-
-                <Button
-                    android:id="@+id/btn_points_global"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="GlOBAL"
-                    android:layout_marginLeft="415dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="25dp"/>
-
             </LinearLayout>
 
-            <Switch
-                android:id="@+id/switchyea"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Puntuaciones / Fechas" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_fechaUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fechaPuntos"
+                    android:layout_marginLeft="25dp"/>
+
+                <Button
+                    android:id="@+id/btn_PuntosUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/puntosPuntos"
+                    android:layout_marginLeft="215dp"/>
+
+                <Switch
+                    android:id="@+id/switch_hintsUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sin_pistas"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="180dp"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,16 +61,15 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="30dp"
-                    android:text="¡Mejores Puntuaciones!"/>
+                    android:text="¡Puntuaciones del Usuario!"/>
 
             </LinearLayout>
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPuntuacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:id="@+id/rvPuntuacionUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
 

@@ -88,6 +88,16 @@
 
         </Button>
 
+        <Button
+            android:id="@+id/points_button"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:backgroundTint="#98A2FF"
+            android:text="@string/puntajePerfil">
+
+        </Button>
+
     </LinearLayout>
 
 </LinearLayout>

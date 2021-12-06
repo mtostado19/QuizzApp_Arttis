@@ -27,21 +27,24 @@ class PuntosAdapter2(val puntos: List<Puntuacion>) :
         private var txtFecha: TextView
         private var txtHints : TextView
         private var txtUsuario : TextView
+        private var txtPartidas : TextView
 
         private lateinit var points: Puntuacion
 
         init {
-            txtPuntuacion = view.findViewById(R.id.id_points)
-            txtFecha = view.findViewById(R.id.id_date)
-            txtHints = view.findViewById(R.id.id_hints)
-            txtUsuario = view.findViewById(R.id.id_user)
+            txtPuntuacion = view.findViewById(R.id.id_points_global)
+            txtFecha = view.findViewById(R.id.id_date_global)
+            txtHints = view.findViewById(R.id.id_hints_global)
+            txtUsuario = view.findViewById(R.id.id_user_global)
+            txtPartidas = view.findViewById(R.id.id_partidas_global)
+
 
         }
         fun bind(points: Puntuacion) {
             txtPuntuacion.text = points.score.toString()
             txtFecha.text = points.date
             txtHints.text = points.hints.toString()
-            txtUsuario.text = points.user
+            txtPartidas.text = 3.toString()
 
             this.points = points
         }
@@ -49,7 +52,7 @@ class PuntosAdapter2(val puntos: List<Puntuacion>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.activity_recyclerview, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.activity_recyclerviewglobal, parent, false)
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -92,11 +95,13 @@ class PointsActivityGlobal : AppCompatActivity(){
         rv.adapter = PuntosAdapter2(arrayPoints)
         rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
-        switchFilter?.setOnCheckedChangeListener({ _ , isChecked ->
-            arrayPoints = if (isChecked) instanceScoreDb.getAscDate() else instanceScoreDb.getAscNumPlaying()
+        switchFilter.setOnCheckedChangeListener { _, isChecked ->
+            arrayPoints =
+                if (isChecked) instanceScoreDb.getAscMatchesPlayed() else instanceScoreDb.getAscNumPlaying()
+            println(arrayPoints)
             rv.adapter = PuntosAdapter(arrayPoints)
             rv.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        })
+        }
 
 
         btnMenu.setOnClickListener { _ ->

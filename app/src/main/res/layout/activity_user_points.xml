@@ -8,35 +8,32 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/btn_points_menu2"
+            android:id="@+id/btn_fechaUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Menu"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:textSize="30dp"/>
+            android:text="@string/fechaPuntos"
+            android:layout_marginLeft="15dp"/>
 
         <Button
-            android:id="@+id/btn_points_local"
+            android:id="@+id/btn_PuntosUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Local"
-            android:layout_marginLeft="415dp"
-            android:layout_marginTop="10dp"
-            android:textSize="25dp"/>
+            android:text="@string/puntosPuntos"
+            android:layout_marginLeft="60dp"/>
+
+        <Switch
+            android:id="@+id/switch_hintsUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sin_pistas"
+            android:textColor="@color/white"
+            android:layout_marginLeft="40dp"/>
 
     </LinearLayout>
-
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="Puntuaciones / Numero de partidas jugadas" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,13 +46,12 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="30dp"
-            android:text="¡Mejores Puntuaciones Globales!"
-            android:textAlignment="center"/>
+            android:text="¡Mejores Puntuaciones!"/>
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPuntuacion"
+        android:id="@+id/rvPuntuacionUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

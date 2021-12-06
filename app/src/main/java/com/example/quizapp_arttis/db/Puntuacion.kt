@@ -8,6 +8,6 @@ data class Puntuacion(
     @ColumnInfo(name = "date") val date: String,
     @ColumnInfo(name = "score") val score: Int,
     @ColumnInfo(name = "hints") val hints: Int,
-    @ColumnInfo(name = "user") val user: String
+    @ColumnInfo(name = "user") val user: String,
 
 )
