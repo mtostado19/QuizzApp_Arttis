@@ -24,10 +24,10 @@ interface PuntuacionDAO {
     @Query("SELECT * FROM score ORDER BY date DESC, hints ASC LIMIT 5")
     fun getAscDate() : List<Puntuacion>
 
-    @Query("SELECT id, COUNT(user) as date, SUM(score) as score, hints, user FROM score GROUP BY user ORDER BY score DESC")
+    @Query("SELECT id, COUNT(user) as date, SUM(score) as score, SUM(hints) as hints, user FROM score GROUP BY user ORDER BY score DESC")
     fun getAscNumPlaying() : List<Puntuacion>
 
-    @Query("SELECT id, COUNT(user) as date, SUM(score) as score, hints, user FROM score GROUP BY user ORDER BY date DESC")
+    @Query("SELECT id, COUNT(user) as date, SUM(score) as score, SUM(hints) as hints, user FROM score GROUP BY user ORDER BY date DESC")
     fun getAscMatchesPlayed() : List<Puntuacion>
 
     @Query("SELECT * FROM score WHERE user = :user ORDER BY date DESC")
@@ -41,6 +41,9 @@ interface PuntuacionDAO {
 
     @Query("SELECT * FROM score WHERE (user = :user AND hints == 0) ORDER BY score DESC")
     fun getPointsUserByPointsNoHints(user : String) : List<Puntuacion>
+
+    @Query("UPDATE score  SET user = :newName WHERE user = :name")
+    fun updateUserScore(name : String, newName : String)
 
 
     @Update

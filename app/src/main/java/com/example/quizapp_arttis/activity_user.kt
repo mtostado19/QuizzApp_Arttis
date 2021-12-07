@@ -188,6 +188,9 @@ class activity_user : AppCompatActivity() {
                 var newName = txtInput.text.toString();
                 if (newName.length > 0) {
                     var userUpdated = Usuario(selectedUser.id, newName, selectedUser.active)
+                    db.currenGameDAO().updateUserCurrentGame(selectedUser.name, newName)
+                    db.optionsDAO().updateUserOptions(selectedUser.name, newName)
+                    db.scoreDAO().updateUserScore(selectedUser.name, newName)
                     userManager.update(userUpdated)
 
                     allUsers = userManager.getAll();

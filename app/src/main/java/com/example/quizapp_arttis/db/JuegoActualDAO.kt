@@ -27,4 +27,7 @@ interface JuegoActualDAO {
 
     @Query("DELETE FROM activeGames WHERE user = :id")
     fun deleteAll(id: String)
+
+    @Query("UPDATE activeGames SET user = :newName WHERE user = :name")
+    fun updateUserCurrentGame(name : String, newName : String)
 }

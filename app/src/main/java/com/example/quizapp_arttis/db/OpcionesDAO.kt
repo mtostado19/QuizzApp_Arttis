@@ -31,4 +31,7 @@ interface OpcionesDAO {
 
     @Query("DELETE FROM options WHERE user = :id")
     fun deleteAll(id: String)
+
+    @Query("UPDATE options SET user = :newName WHERE user = :name")
+    fun updateUserOptions(name : String, newName : String)
 }
